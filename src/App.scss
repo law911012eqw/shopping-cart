@@ -1,0 +1,64 @@
+/*********NAVIGATION-MENU*********/
+.Nav{
+  display: flex;
+  /* background-image: url(./assets/images/home/home_wall.jpg); */
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px double rgb(1,1,1);
+  box-shadow: 0 2px 15px 0 rgba(1,1,1,0.3);
+}
+.logo{
+  display: flex;
+  flex-direction: column;
+  font-family: Ubuntu, sans-serif;
+  font-size: 22px;
+  color: rgb(190, 90, 90);
+}
+.logo > span {
+  text-align: center;
+  margin-top: -23px;
+  border-right: rgb(190, 90, 90);
+}
+.Nav > ul{
+  display: flex;
+  justify-content: space-around;
+  width: 55%;
+  height: 100%;
+}
+.Nav li{
+  font-family: Ubuntu, sans-serif;
+  font-size: 1.5em;
+  list-style: none;
+  text-decoration: none;
+  margin-top: 25px;
+  padding: 25px 25px 15px;
+}
+.Nav li:hover{
+  background: rgba(0,0,0,0.1);
+}
+.component-title{
+  text-align: center;
+  margin-top: 22px;
+  margin-bottom: 25px;
+}
+.home-card-container{
+  display: flex;
+  margin: 0 auto;
+  max-width: 1200px;
+  min-height: 500px;
+  border: 1px solid rgba(1,1,1,0.6);
+}
+.homecard{
+  flex-basis: 25%;
+  color:black;
+}
+#books, #cart{
+  cursor: pointer;
+}
+.homecard-header{
+  text-align: center;
+}
+.homecard-desc{
+  text-align: center;
+  padding: 10px 20px;
+}

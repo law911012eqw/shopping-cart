@@ -4,24 +4,27 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Home from './Home';
 import Books from './Books';
 import Cart from './Cart';
-import About from './About';
+import logo from '../assets/images/shoppingcart-logo.png'
 const Nav = () => {
+    const quote = `Sell used books in a low price`;
     return (
         <Router>
             <div>
                 <nav className='Nav'>
+                    <div className="logo">
+                        
+                        <img src={logo} alt="logo" />
+                        <span>{quote}</span>
+                    </div>
                     <ul>
                         <li>
-                            <Link to="/" active>Home</Link>
+                            <Link to="/" active="true">Home</Link>
                         </li>
                         <li>
                             <Link to="/Books">Books</Link>
                         </li>
                         <li>
                             <Link to="/Cart">Cart</Link>
-                        </li>
-                        <li>
-                            <Link to="/About">About</Link>
                         </li>
                     </ul>
                 </nav>
@@ -30,7 +33,6 @@ const Nav = () => {
                     <Route exact path="/" component={Home} />
                     <Route path="/Books" component={Books} />
                     <Route path="/Cart" component={Cart} />
-                    <Route path="/About" component={About} />
                 </Switch>
             </div>
         </Router>
