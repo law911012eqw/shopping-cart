@@ -1,11 +1,15 @@
 /*********NAVIGATION-MENU*********/
+.rineria{
+  width:50%;
+}
 .Nav{
+  background: white;
   display: flex;
   /* background-image: url(./assets/images/home/home_wall.jpg); */
   justify-content: space-between;
   align-items: center;
   border-bottom: 3px double rgb(1,1,1);
-  box-shadow: 0 2px 15px 0 rgba(1,1,1,0.3);
+  box-shadow: 0 2px 15px 0 rgba(1,1,1,0.1);
 }
 .logo{
   display: flex;
@@ -15,7 +19,7 @@
   color: rgb(190, 90, 90);
 }
 .logo > span {
-  text-align: center;
+  margin-left: 20px;
   margin-top: -23px;
   border-right: rgb(190, 90, 90);
 }
@@ -29,14 +33,17 @@
   font-family: Ubuntu, sans-serif;
   font-size: 1.5em;
   list-style: none;
-  text-decoration: none;
   margin-top: 25px;
   padding: 25px 25px 15px;
 }
 .Nav li:hover{
   background: rgba(0,0,0,0.1);
 }
+li > *{
+  text-decoration: none;
+}
 .component-title{
+  color:rgb(70, 16, 16);
   text-align: center;
   margin-top: 22px;
   margin-bottom: 25px;
@@ -44,16 +51,50 @@
 .home-card-container{
   display: flex;
   margin: 0 auto;
+  margin-bottom: 50px;
   max-width: 1200px;
   min-height: 500px;
   border: 1px solid rgba(1,1,1,0.6);
 }
 .homecard{
   flex-basis: 25%;
-  color:black;
+  color:rgb(87, 67, 67);
+  transition: 3s ease-in-out;
 }
-#books, #cart{
+.homecard:hover{
+  .home-big-text{
+    transform: translate(0, 7vh);
+    opacity: 0.1;
+    visibility: hidden;
+
+  }
+  .blur-bg{
+    visibility: visible;
+    opacity:1;
+  }
+}
+#books, #cart, #github{
   cursor: pointer;
+}
+.home-big-text{
+  font-size: 2.5em;
+  width: 100px;
+  transform: translate(0, 30vh); 
+  margin: auto;
+  text-align: center;
+  pointer-events: none;
+  color: rgb(48, 39, 39);
+  transition: 0.4s ease-in-out;
+}
+
+.blur-bg{
+  background-color: rgba(255,255,255,0.6);
+  backdrop-filter: blur(6px);
+  min-height: 300px;
+  pointer-events: none;
+  visibility: hidden;
+  opacity:0;
+  transition: 1s;
 }
 .homecard-header{
   text-align: center;
@@ -61,4 +102,6 @@
 .homecard-desc{
   text-align: center;
   padding: 10px 20px;
+  white-space: pre-wrap;
 }
+

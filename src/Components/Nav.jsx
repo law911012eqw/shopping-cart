@@ -6,14 +6,14 @@ import Books from './Books';
 import Cart from './Cart';
 import logo from '../assets/images/shoppingcart-logo.png'
 const Nav = () => {
-    const quote = `Sell used books in a low price`;
+    const quote = `Sell used books at reasonably low price`;
     return (
         <Router>
             <div>
                 <nav className='Nav'>
                     <div className="logo">
                         
-                        <img src={logo} alt="logo" />
+                        <img className="rineria" src={logo} alt="logo" />
                         <span>{quote}</span>
                     </div>
                     <ul>

@@ -1,3 +1,5 @@
+$main-bg: rgb(220, 243, 245);
+
 body {
   margin: 0;
   font-family: 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,6 +7,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-y: auto;
+  background-color: $main-bg;
 }
 
 code {

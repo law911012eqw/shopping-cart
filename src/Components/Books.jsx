@@ -1,9 +1,10 @@
 import React from 'react';
 
+import BooksNav from './BooksNav';
 const Books = () => {
     return (
         <div className='Books'>
-            <h1>Books</h1>
+            <BooksNav />
         </div>
     );
 }
