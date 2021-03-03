@@ -13,7 +13,7 @@ const Books = () => {
     //mapping the entire book iamges
     const importAll = images.keys().map(images);
     //Helpers
-    const emphasizedPropHelper = (b, title, price, genres, desc, author) => {
+    const emphasizedPropHelper = (b, title, price, author, genres, desc) => {
         if (b.title === title) {
             b.price = price;
             b.author = author;
@@ -29,7 +29,7 @@ const Books = () => {
         function addingDetails(b) {
             emphasizedPropHelper(
                 b, 'Japanese Legends and Folklore',
-                4, 'A.B Mitford',
+                2, 'A.B Mitford',
                 'Mythology,Folklore',
                 'asdsad')
             emphasizedPropHelper(
@@ -100,7 +100,7 @@ const Books = () => {
     return (
         <div className='Books'>
             <div className='books-wrapper'>
-                <BooksNav />
+                <BooksNav booksNum={books.length}/>
                 <div className="book-display-container">
                     {renderBooks}
                 </div>

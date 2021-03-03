@@ -117,7 +117,7 @@ li > *{
 .books-wrapper{
   display: flex;
   justify-content: space-between;
-  margin: 34px 68px;
+  margin: 34px 28px;
 }
 .book-display-container{
   display: flex;
@@ -138,7 +138,9 @@ li > *{
       .book-title{
         color: rgb(223, 107, 107);
         width: 200px;
+        cursor: pointer;
       }
+      .book-title:hover{ text-decoration: underline; }
     }
   }
 }
@@ -146,7 +148,7 @@ li > *{
 /*********Side Navigation BOOKS*********/
 .Books-Nav{
   display: flex;
-  padding: 10px 30px;
+  padding: 24px;
   flex-direction: column;
   font-size: 22px;
   background-color:rgb(48, 39, 39);
@@ -162,20 +164,23 @@ li > *{
     margin-left: 5px;
     color: white;
   }
-  li{
-    font-size: clamp(1vw, 1.4vw, 2rem); 
+  li, h4{
+    font-size: clamp(1vw, 1.2vw, 2rem); 
     cursor: pointer;
     padding-bottom: 12px;
     border-bottom:1px solid rgba(48, 39, 39, 0.1);
-    i{
-      visibility: hidden;
-    }
+    // i{
+    //   visibility: hidden;
+    // }
   }
   li:hover{
     text-decoration: underline;
-    i{
-      visibility: visible;
-    }
+    // i{
+    //   visibility: visible;
+    // }
+  }
+  *{
+    user-select: none;
   }
   li:target{
     font-weight: bold;
