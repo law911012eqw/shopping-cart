@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
 
 import Home from './Home';
 import Books from './Books';
@@ -12,19 +12,34 @@ const Nav = () => {
             <div>
                 <nav className='Nav'>
                     <div className="logo">
-                        
+
                         <img className="rineria" src={logo} alt="logo" />
                         <span>{quote}</span>
                     </div>
                     <ul>
                         <li>
-                            <Link to="/" active="true">Home</Link>
+                            <NavLink
+                                exact to="/"
+                                activeStyle={{
+                                    fontWeight: "bold",
+                                }}
+                            >Home</NavLink>
                         </li>
                         <li>
-                            <Link to="/Books">Books</Link>
+                            <NavLink
+                                to="/Books"
+                                activeStyle={{
+                                    fontWeight: "bold",
+                                }}
+                            >Books</NavLink>
                         </li>
                         <li>
-                            <Link to="/Cart">Cart</Link>
+                        <NavLink
+                                to="/Cart"
+                                activeStyle={{
+                                    fontWeight: "bold",
+                                }}
+                            >Cart</NavLink>
                         </li>
                     </ul>
                 </nav>

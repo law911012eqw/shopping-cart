@@ -1,3 +1,10 @@
+/*********GLOBAL TAGS*********/
+li{
+  list-style: none;
+} 
+button{
+  cursor: pointer;
+}
 /*********NAVIGATION-MENU*********/
 .rineria{
   width:50%;
@@ -19,6 +26,7 @@
   color: rgb(190, 90, 90);
 }
 .logo > span {
+  font-size: clamp(0.6vw, 1.1vw, 2rem); 
   margin-left: 20px;
   margin-top: -23px;
   border-right: rgb(190, 90, 90);
@@ -32,7 +40,6 @@
 .Nav li{
   font-family: Ubuntu, sans-serif;
   font-size: 1.5em;
-  list-style: none;
   margin-top: 25px;
   padding: 25px 25px 15px;
 }
@@ -40,6 +47,7 @@
   background: rgba(0,0,0,0.1);
 }
 li > *{
+  color: rgb(223, 107, 107);
   text-decoration: none;
 }
 .component-title{
@@ -105,3 +113,82 @@ li > *{
   white-space: pre-wrap;
 }
 
+/*********BOOKS SECTION*********/
+.books-wrapper{
+  display: flex;
+  justify-content: space-between;
+  margin: 34px 68px;
+}
+.book-display-container{
+  display: flex;
+  flex-wrap: wrap;
+  margin: 15px 20px;
+  .book-display{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: inherit;
+    text-align: center;
+    border: 1px solid rgba(1,1,1,0.4);
+    padding: 25px;
+    .book-display-upper{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .book-title{
+        color: rgb(223, 107, 107);
+        width: 200px;
+      }
+    }
+  }
+}
+
+/*********Side Navigation BOOKS*********/
+.Books-Nav{
+  display: flex;
+  padding: 10px 30px;
+  flex-direction: column;
+  font-size: 22px;
+  background-color:rgb(48, 39, 39);
+  color: white;
+  border-radius: 12px;
+  width: 10vw;
+  ul{
+    margin: 0 auto;
+    margin-left: -12px;
+    border-radius: 12px;
+  }
+  i{
+    margin-left: 5px;
+    color: white;
+  }
+  li{
+    font-size: clamp(1vw, 1.4vw, 2rem); 
+    cursor: pointer;
+    padding-bottom: 12px;
+    border-bottom:1px solid rgba(48, 39, 39, 0.1);
+    i{
+      visibility: hidden;
+    }
+  }
+  li:hover{
+    text-decoration: underline;
+    i{
+      visibility: visible;
+    }
+  }
+  li:target{
+    font-weight: bold;
+  }
+}
+.fa-search-plus{
+  transform: scale(0.6);
+}
+.add-to-cart{
+  background-color:rgb(73, 200, 51); 
+  i { color: white;}
+  span { color: white;}
+}
+.add-to-cart:hover{
+  transform: scale(1.4);
+}
