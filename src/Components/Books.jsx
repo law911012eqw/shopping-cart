@@ -10,6 +10,16 @@ const images = require.context('../assets/images/books', true, /\.svg|png|jpg$/)
 const Books = () => {
     //Reserved array of book objects for later
     const [books, setBooks] = useState([]);
+
+    //copy of the original books as a sorting display array
+    const [displayBooks, setDisplayBooks] = useState([]);
+
+    //trigger states that changes for every click event on the proper elements associated with it
+    const [didPriceSortClicked, setDidPriceSortClicked] = useState(undefined); //true -> up; false -> down
+    const [didAlphaSortClicked, setDidAlphaSortClicked] = useState(undefined); //true -> up; false -> down
+
+    //event object as a state
+    const [eventName, setEventName] = useState();
     //mapping the entire book iamges
     const importAll = images.keys().map(images);
     //Helpers
@@ -61,18 +71,42 @@ const Books = () => {
             })
         }
         const translateNameToBookTitle = (str) => {
-            str = str.replace(`/static/media/`, '').replace(`-`, ' ');
-            //str = str.replace(`-`, '');
-            str = str.split('_');
+            str = str.replace(`/static/media/`, '').replace(`-`, ' ').split('_');
             return str[0].replace(/([A-Z])/g, ' $1').trim();
         }
         loadBookDatabase(importAll);
         setBooks(newArr);
-        console.log(books);
+        setDisplayBooks(newArr);
     }, [])
-
-    console.log(books);
-    const renderBooks = books.map((b, i) => {
+    useEffect(()=>{
+        console.log(didPriceSortClicked, didAlphaSortClicked);
+        const eid = eventName;
+        const booksCopy = books;
+        if(eid === 'price'){
+                if (didPriceSortClicked === true) {
+                    booksCopy.sort((a, b) => ((a.price < b.price) ? 1 : -1));
+                } else if (didPriceSortClicked === false) {
+                    booksCopy.sort((a, b) => ((a.price > b.price) ? 1 : -1)); 
+                }
+                setDisplayBooks(booksCopy);
+        } else if(eid === 'title'){
+            // for (let i = 0; i < booksCopy.length; i++) {
+                if (didAlphaSortClicked === true) {
+                    booksCopy.sort((a, b) => ((a.title.toUpperCase() < b.title.toUpperCase()) ? 1 : -1));
+                } else if (didAlphaSortClicked === false) {
+                    booksCopy.sort((a, b) => ((a.title.toUpperCase() > b.title.toUpperCase()) ? 1 : -1));
+                }
+                setDisplayBooks(booksCopy);
+            // }
+        } else if(eid === 'library'){
+            setDisplayBooks(books);
+            setDidPriceSortClicked('undefined');
+            setDidAlphaSortClicked('undefined');
+        }
+    },[didPriceSortClicked, didAlphaSortClicked, eventName])
+    console.log(displayBooks);
+    console.log(eventName);
+    const renderBooks = displayBooks.map((b, i) => {
         console.log(b);
         return (
             <div
@@ -81,7 +115,10 @@ const Books = () => {
                 className="book-display"
             >
                 <div className="book-display-upper">
-                    <h3 className="book-title">{b.title}</h3>
+                    <div>
+                        <h3 className="book-title">{b.title}</h3>
+                        <h5 className="book-author">{`by | ${b.author}`}</h5>
+                    </div>
                     <div>
                         <p>{`$${b.price}`}</p>
                         <img src={`${b.default}`} width="200px" alt="book"></img>
@@ -100,7 +137,12 @@ const Books = () => {
     return (
         <div className='Books'>
             <div className='books-wrapper'>
-                <BooksNav booksNum={books.length}/>
+                <BooksNav
+                    booksNum={books.length}
+                    setDidPriceSortClicked={setDidPriceSortClicked}
+                    setDidAlphaSortClicked={setDidAlphaSortClicked}
+                    setEventName={setEventName}
+                />
                 <div className="book-display-container">
                     {renderBooks}
                 </div>

@@ -1,6 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-const BooksNav = ({ booksNum }) => {
+const BooksNav = ({
+        booksNum,
+        sortArrayInPrice,
+        sortArrayInAlpha,
+        sortArrayInAuthors,
+        setDidPriceSortClicked,
+        setDidAlphaSortClicked,
+        setEventName
+    }) => {
     const [PriceSort, setPriceSort] = useState('default');
     const [AlphaSort, setAlphaSort] = useState('default');
     const [AuthorSort, setAuthorSort] = useState('right');
@@ -11,33 +19,49 @@ const BooksNav = ({ booksNum }) => {
         } else if (e.target.className === 'books-nav-authors') {
             AuthorSort === 'right' ? setAuthorSort('down') : setAuthorSort('right');
         } else if (e.target.className === 'books-nav-all') {
-            console.log('it worked');
             setAlphaSort('default');
             setPriceSort('default');
         } else if (e.target.className === 'books-nav-price') {
-            PriceSort != 'up' ? setPriceSort('up') : setPriceSort('down');
+            if(PriceSort !== 'up'){
+                setPriceSort('up')
+                setDidPriceSortClicked(true);
+            } else{
+                setPriceSort('down');
+                setDidPriceSortClicked(false);
+            }
+            setAlphaSort('default');
         } else if (e.target.className === 'books-nav-alpha') {
-            AlphaSort != 'up' | 'down' ? setAlphaSort('up') : setAlphaSort('down');
+            if(AlphaSort !== 'up'){
+                setAlphaSort('up')
+                setDidAlphaSortClicked(true);
+            } else{
+                setAlphaSort('down');
+                setDidAlphaSortClicked(false);
+            }
+            setPriceSort('default');
         }
+        setEventName(e.target.id);
     }
-    console.log(GenreSort);
     return (
         <div className='Books-Nav'>
             <ul className="books-top-nav">
                 <li
                     onClick={toggleSortIcon}
+                    id="library"
                     className="books-nav-all">
                     All books <span> ({booksNum})</span>
                 </li>
                 <li
                     onClick={toggleSortIcon}
+                    id="price"
                     className="books-nav-price">
-                    Low to high price {PriceSort === 'up' ? <i className="fas fa-sort-up"></i> : 
+                    Low to high price {PriceSort === 'up' ? <i className="fas fa-sort-up"></i> :
                         PriceSort === 'down' ? <i className="fas fa-sort-down"></i> : null}
-                    </li>
+                </li>
                 <li onClick={toggleSortIcon}
+                    id="title"
                     className="books-nav-alpha">
-                    A-Z {AlphaSort === 'up' ? <i className="fas fa-sort-up"></i> : 
+                    A-Z {AlphaSort === 'up' ? <i className="fas fa-sort-up"></i> :
                         AlphaSort === 'down' ? <i className="fas fa-sort-down"></i> : null}
                 </li>
             </ul>
@@ -47,11 +71,13 @@ const BooksNav = ({ booksNum }) => {
                     className="books-nav-authors">
                     Authors {AuthorSort === 'right' ? <i className="fas fa-caret-right"></i> : <i className="fas fa-sort-down"></i>}
                 </h4>
+                <div className="author-list"></div>
                 <h4
                     onClick={toggleSortIcon}
                     className="books-nav-genres">
                     Genres {GenreSort === 'right' ? <i className="fas fa-caret-right"></i> : <i className="fas fa-sort-down"></i>}
                 </h4>
+                <div className="genre-list"></div>
             </ul>
         </div>
     );

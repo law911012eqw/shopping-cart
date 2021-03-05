@@ -141,6 +141,9 @@ li > *{
         cursor: pointer;
       }
       .book-title:hover{ text-decoration: underline; }
+      .book-author{
+        font-weight: 200;
+      }
     }
   }
 }
