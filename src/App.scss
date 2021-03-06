@@ -138,15 +138,6 @@ li > *{
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      .book-title{
-        color: rgb(223, 107, 107);
-        width: 200px;
-        cursor: pointer;
-      }
-      .book-title:hover{ text-decoration: underline; }
-      .book-author{
-        font-weight: 200;
-      }
     }
     .book-display-lower{
       .book-click-text{
@@ -155,7 +146,15 @@ li > *{
     }
   }
 }
-
+.book-title{
+  color: rgb(223, 107, 107);
+  width: 200px;
+  cursor: pointer;
+}
+.book-title:hover{ text-decoration: underline; }
+.book-author{
+  font-weight: 200;
+}
 /*********Side Navigation BOOKS*********/
 .Books-Nav{
   display: flex;
@@ -207,7 +206,78 @@ li > *{
   span { color: white;}
 }
 .add-to-cart:hover{
-  transform: scale(1.4);
+  transform: scale(1.2);
 }
-/*********BOOK- SECTION*********/
+/*********BOOK-DETAIL SECTION*********/
+.modal{
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(24,24,24,0.1);
+  position: absolute;
+  .body{
+    overflow-y: hidden;
+  }
+}
+.Book-Detail{
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right:0;
+  margin: 0 auto;
+  z-index: 8;
+  width: 50vw;
+  height: 60vh;
+  transform: translate(0, 20%);
+  background: rgb(253, 208, 208);
+  .book-detail-info{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    width: 30%;
+  }
+    div{
+      background: rgba(255, 255, 255, 0.295);
+      margin: 10px 30px;
+      width: 65%;
+    }
+}
+
+.book-detail-desc{
+  padding: 30px 10px;
+  font-weight: 300;
+}
+
+.img-slider-main{
+  display: flex;
+  button{
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    border: none;
+  }
+  button:hover{
+    border: 1px solid rgb(34, 32, 32);
+  }
+}
+.isc{
+  width: 20px;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.349);
+}
+.btn-close{
+  position: absolute;
+  top: 100;
+  right: 1%;
+  width: 20px;
+  height: 20px;
+  border: none;
+  .fa-times-circle{
+    margin: 0 auto;
+  }
+}
 /*********SHOPPING-CART SECTION*********/

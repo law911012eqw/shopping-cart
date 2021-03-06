@@ -25,8 +25,11 @@ const Books = () => {
 
     //event object as a state
     const [eventName, setEventName] = useState();
+
     //mapping the entire book iamges
     const importAll = images.keys().map(images);
+
+    const [objForBookDetail, setObjForBookDetail] = useState([]);
     //Helpers
     const emphasizedPropHelper = (b, title, price, author, genres, desc) => {
         if (b.title === title) {
@@ -295,14 +298,9 @@ const Books = () => {
         })
         setDisplayBooks(newArray);
     }, [matchValue])
-    const renderBookDetail = () => {
-        return(
-            <div>
-
-            </div>
-        )
-    }
     const renderBooks = (arr) => arr.map((b, i) => {
+        const handleBookDetail = () => setObjForBookDetail(b);
+        console.log(objForBookDetail);
         console.log('price: ' + b.price + ' title: ' + b.title);
         return (
             <div
@@ -312,7 +310,7 @@ const Books = () => {
             >
                 <div className="book-display-upper">
                     <div>
-                        <h3 className="book-title">{b.title}</h3>
+                        <h3 onClick={handleBookDetail} className="book-title">{b.title}</h3>
                         <h5 className="book-author">{`by | ${b.author}`}</h5>
                     </div>
                     <div>
@@ -346,6 +344,7 @@ const Books = () => {
                     {renderBooks(displayBooks)}
                 </div>
             </div>
+            { objForBookDetail.length !== 0 ? <BookDetail objForBookDetail={objForBookDetail} setObjForBookDetail={setObjForBookDetail} /> : null }
         </div>
     );
 }

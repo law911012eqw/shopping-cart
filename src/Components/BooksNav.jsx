@@ -13,9 +13,7 @@ const BooksNav = ({
     const [AlphaSort, setAlphaSort] = useState('default');
     const [AuthorSort, setAuthorSort] = useState('right');
     const [GenreSort, setGenreSort] = useState('right');
-
     const toggleSortIcon = (e) => {
-        console.log('you just clicked it');
         if (e.target.className === 'books-nav-genres') {
             if (GenreSort === 'right') {
                 setGenreSort('down');
@@ -90,7 +88,7 @@ const BooksNav = ({
                         {AuthorSort === 'down'
                             ? authorArray.map((prop, i) => {
                                 return (
-                                    <li key={i} onClick={handleClick} className="prop-only-selection">{prop.author}<span>({prop.count})</span></li>
+                                    <li key={i} onClick={handleClick} className="prop-only-selection">{prop.author}({prop.count})</li>
                                 );
                             })
                             : null}
@@ -108,7 +106,7 @@ const BooksNav = ({
                         {GenreSort === 'down'
                             ? genreArray.map((prop, i) => {
                                 return (
-                                    <li key={i} onClick={handleClick} className="prop-only-selection">{prop.genres}<span>({prop.count})</span></li>
+                                    <li key={i} onClick={handleClick} className="prop-only-selection">{prop.genres}({prop.count})</li>
                                 );
                             })
                             : null}
