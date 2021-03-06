@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 
 const BooksNav = ({
         booksNum,
-        sortArrayInPrice,
-        sortArrayInAlpha,
-        sortArrayInAuthors,
         setDidPriceSortClicked,
         setDidAlphaSortClicked,
+        setDisplayAuthorList,
+        setDisplayGenreList,
         setEventName
     }) => {
     const [PriceSort, setPriceSort] = useState('default');
@@ -15,9 +14,21 @@ const BooksNav = ({
     const [GenreSort, setGenreSort] = useState('right');
     const toggleSortIcon = (e) => {
         if (e.target.className === 'books-nav-genres') {
-            GenreSort === 'right' ? setGenreSort('down') : setGenreSort('right');
+            if(GenreSort === 'right'){
+                setGenreSort('down');
+                setDisplayGenreList(true);
+            } else {
+                setGenreSort('right');
+                setDisplayGenreList(false);
+            }
         } else if (e.target.className === 'books-nav-authors') {
-            AuthorSort === 'right' ? setAuthorSort('down') : setAuthorSort('right');
+            if(AuthorSort === 'right'){
+                setAuthorSort('down');
+                setDisplayAuthorList(true);
+            } else {
+                setAuthorSort('right');
+                setDisplayAuthorList(false);
+            }
         } else if (e.target.className === 'books-nav-all') {
             setAlphaSort('default');
             setPriceSort('default');
