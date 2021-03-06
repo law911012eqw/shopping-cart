@@ -1,57 +1,60 @@
 import React, { useState } from 'react';
 
 const BooksNav = ({
-        booksNum,
-        setDidPriceSortClicked,
-        setDidAlphaSortClicked,
-        setDisplayAuthorList,
-        setDisplayGenreList,
-        setEventName
-    }) => {
+    booksNum,
+    setDidPriceSortClicked,
+    setDidAlphaSortClicked,
+    setEventName,
+    setMatchValue,
+    authorArray,
+    genreArray
+}) => {
     const [PriceSort, setPriceSort] = useState('default');
     const [AlphaSort, setAlphaSort] = useState('default');
     const [AuthorSort, setAuthorSort] = useState('right');
     const [GenreSort, setGenreSort] = useState('right');
+
     const toggleSortIcon = (e) => {
+        console.log('you just clicked it');
         if (e.target.className === 'books-nav-genres') {
-            if(GenreSort === 'right'){
+            if (GenreSort === 'right') {
                 setGenreSort('down');
-                setDisplayGenreList(true);
             } else {
                 setGenreSort('right');
-                setDisplayGenreList(false);
             }
         } else if (e.target.className === 'books-nav-authors') {
-            if(AuthorSort === 'right'){
+            if (AuthorSort === 'right') {
                 setAuthorSort('down');
-                setDisplayAuthorList(true);
             } else {
                 setAuthorSort('right');
-                setDisplayAuthorList(false);
             }
         } else if (e.target.className === 'books-nav-all') {
             setAlphaSort('default');
             setPriceSort('default');
         } else if (e.target.className === 'books-nav-price') {
-            if(PriceSort !== 'up'){
+            if (PriceSort !== 'up') {
                 setPriceSort('up')
                 setDidPriceSortClicked(true);
-            } else{
+            } else {
                 setPriceSort('down');
                 setDidPriceSortClicked(false);
             }
             setAlphaSort('default');
         } else if (e.target.className === 'books-nav-alpha') {
-            if(AlphaSort !== 'up'){
+            if (AlphaSort !== 'up') {
                 setAlphaSort('up')
                 setDidAlphaSortClicked(true);
-            } else{
+            } else {
                 setAlphaSort('down');
                 setDidAlphaSortClicked(false);
             }
             setPriceSort('default');
         }
         setEventName(e.target.id);
+    }
+    const handleClick = (e) => {
+        const splitText = e.target.textContent.split('(');
+        setMatchValue(splitText[0]);
     }
     return (
         <div className='Books-Nav'>
@@ -77,18 +80,41 @@ const BooksNav = ({
                 </li>
             </ul>
             <ul className="books-bottom-nav">
-                <h4
-                    onClick={toggleSortIcon}
-                    className="books-nav-authors">
-                    Authors {AuthorSort === 'right' ? <i className="fas fa-caret-right"></i> : <i className="fas fa-sort-down"></i>}
-                </h4>
-                <div className="author-list"></div>
-                <h4
-                    onClick={toggleSortIcon}
-                    className="books-nav-genres">
-                    Genres {GenreSort === 'right' ? <i className="fas fa-caret-right"></i> : <i className="fas fa-sort-down"></i>}
-                </h4>
-                <div className="genre-list"></div>
+                <div className="prop-list" id="author-list">
+                    <h4
+                        onClick={toggleSortIcon}
+                        className="books-nav-authors">
+                        Authors {AuthorSort === 'right' ? <i className="fas fa-caret-right"></i> : <i className="fas fa-sort-down"></i>}
+                    </h4>
+                    <ul>
+                        {AuthorSort === 'down'
+                            ? authorArray.map((prop, i) => {
+                                return (
+                                    <li key={i} onClick={handleClick} className="prop-only-selection">{prop.author}<span>({prop.count})</span></li>
+                                );
+                            })
+                            : null}
+
+                    </ul>
+                </div>
+
+                <div className="prop-list" id="genre-list">
+                    <h4
+                        onClick={toggleSortIcon}
+                        className="books-nav-genres">
+                        Genres {GenreSort === 'right' ? <i className="fas fa-caret-right"></i> : <i className="fas fa-sort-down"></i>}
+                    </h4>
+                    <ul>
+                        {GenreSort === 'down'
+                            ? genreArray.map((prop, i) => {
+                                return (
+                                    <li key={i} onClick={handleClick} className="prop-only-selection">{prop.genres}<span>({prop.count})</span></li>
+                                );
+                            })
+                            : null}
+
+                    </ul>
+                </div>
             </ul>
         </div>
     );

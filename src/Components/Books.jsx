@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import BooksNav from './BooksNav';
-
+import BookDetail from './BookDetail';
 const images = require.context('../assets/images/books', true, /\.svg|png|jpg$/);
 
 //The heart of the project compels me to deny myself at resorting to auto mapping and manually create specific details about the book 
@@ -13,12 +13,15 @@ const Books = () => {
 
     //copy of the original books as a sorting display array
     const [displayBooks, setDisplayBooks] = useState([]);
+    const [authorArray, setAuthorArray] = useState([]);
+    const [genreArray, setGenreArray] = useState([]);
 
     //trigger states that changes for every click event on the proper elements associated with it
     const [didPriceSortClicked, setDidPriceSortClicked] = useState(undefined); //true -> up; false -> down
     const [didAlphaSortClicked, setDidAlphaSortClicked] = useState(undefined); //true -> up; false -> down
-    const [displayAuthorList, setDisplayAuthorList] = useState(false);
-    const [displayGenreList, setDisplayGenreList] = useState(false);
+
+    //A value that checks whether it exists on one of the selected property
+    const [matchValue, setMatchValue] = useState(null);
 
     //event object as a state
     const [eventName, setEventName] = useState();
@@ -60,7 +63,7 @@ const Books = () => {
             emphasizedPropHelper(
                 b, 'Children of Time',
                 8, 'Adrian Tchaikovsky',
-                'Science-Fiction,Fiction,Space,Opera',
+                'Science=Fiction,Fiction,Space,Opera',
                 `A race for survival among the stars... Humanity's last survivors escaped earth's ruins to find a new home. But when they find it, can their desperation overcome its dangers?
 
                     WHO WILL INHERIT THIS NEW EARTH?
@@ -70,13 +73,13 @@ const Books = () => {
             emphasizedPropHelper(
                 b, 'Existentialism is Humanism',
                 5, 'Jean-Paul Sartre',
-                'Philosophy,Non-fiction,Classics',
+                'Philosophy,Non=fiction,Classics',
                 'The idea of freedom occupies the center of Sartre’s doctrine. Man, born into an empty, godless universe, is nothing to begin with. He creates his essence—his self, his being—through the choices he freely makes (“existence precedes essence”). Were it not for the contingency of his death, he would never end. Choosing to be this or that is to affirm the value of what we choose. In choosing, therefore, we commit not only ourselves but all of mankind.'
             )
             emphasizedPropHelper(
                 b, 'Fahrenheit 451',
                 3, 'Ray Bradfury',
-                'Classics,Fiction,Science-Fiction',
+                'Classics,Fiction,Science=Fiction',
                 `Guy Montag is a fireman. In his world, where television rules and literature is on the brink of extinction, firemen start fires rather than put them out. His job is to destroy the most illegal of commodities, the printed book, along with the houses in which they are hidden.
 
                 Montag never questions the destruction and ruin his actions produce, returning each day to his bland life and wife, Mildred, who spends all day with her television 'family'. But then he meets an eccentric young neighbor, Clarisse, who introduces him to a past where people did not live in fear and to a present where one sees the world through the ideas in books instead of the mindless chatter of television.`
@@ -90,13 +93,13 @@ const Books = () => {
             emphasizedPropHelper(
                 b, 'Fear and Trembling',
                 6, 'Soren Kierkegaard',
-                'Philosophy,Non-fiction,Religion,Classics',
+                'Philosophy,Non=fiction,Religion,Classics',
                 'In Fear and Trembling, Kierkegaard wanted to understand the anxiety that must have been present in Abraham when God commanded him to offer his son as a human sacrifice. Abraham had a choice to complete the task or to forget it. He resigned himself to the loss of his son, acting according to his faith. In other words, one must be willing to give up all his or her earthly possessions in infinite resignation and must also be willing to give up whatever it is that he or she loves more than God. Abraham had passed the test -- his love for God proved greater than anything else in him. And because a good and just Creator would not want a father to kill his son, God intervened at the last moment to prevent the sacrifice.'
             )
             emphasizedPropHelper(
                 b, 'Men Without Women',
-                11, 'Hakuri Murakami',
-                'Short-Stories,Fiction',
+                11, 'Haruki Murakami',
+                'Short=Stories,Fiction',
                 `A dazzling new collection of short stories—the first major new work of fiction from the beloved, internationally acclaimed, Haruki Murakami since his #1 best-selling Colorless Tsukuru Tazaki and His Years of Pilgrimage.
 
                 Across seven tales, Haruki Murakami brings his powers of observation to bear on the lives of men who, in their own ways, find themselves alone. Here are vanishing cats and smoky bars, lonely hearts and mysterious women, baseball and the Beatles, woven together to tell stories that speak to us all.
@@ -106,21 +109,21 @@ const Books = () => {
             emphasizedPropHelper(
                 b, 'No Longer Human',
                 4, 'Osamu Dazai',
-                'Fiction,Classics,Asian-Literature',
+                'Fiction,Classics,Asian=Literature',
                 'Osamu Dazai\'s No Longer Human, this leading postwar Japanese writer\'s second novel, tells the poignant and fascinating story of a young man who is caught between the breakup of the traditions of a northern Japanese aristocratic family and the impact of Western ideas. In consequence, he feels himself "disqualified from being human" (a literal translation of the Japanese title).'
             )
             emphasizedPropHelper(
                 b, 'On the shortness of life',
                 2, 'Seneca',
-                'Philosophy,Non-fiction,Classics',
+                'Philosophy,Non=fiction,Classics',
                 `The Stoic writings of the philosopher Seneca offer powerful insights into the art of living, the importance of reason and morality, and continue to provide profound guidance to many through their eloquence, lucidity and timeless wisdom.
 
                 Throughout history, some books have changed the world. They have transformed the way we see ourselves—and each other. They have inspired debate, dissent, war and revolution. They have enlightened, outraged, provoked and comforted. They have enriched lives—and destroyed them.`
             )
             emphasizedPropHelper(
                 b, 'One Hundred Years of Solitude',
-                4, ' Gabriel García Márquez',
-                'Fiction,Classics,Magical-Realism,Literature',
+                4, 'Gabriel García Márquez',
+                'Fiction,Classics,Magical=Realism,Literature',
                 'The brilliant, bestselling, landmark novel that tells the story of the Buendia family, and chronicles the irreconcilable conflict between the desire for solitude and the need for love—in rich, imaginative prose that has come to define an entire genre known as "magical realism."'
             )
             emphasizedPropHelper(
@@ -131,8 +134,8 @@ const Books = () => {
             )
             emphasizedPropHelper(
                 b, 'The Fifth Agreement',
-                3, 'Miguel Ruiz, José Luis Ruiz',
-                'Spirituality,Non-fiction,Self-help',
+                3, 'Miguel Ruiz,José Luis Ruiz',
+                'Spirituality,Non=fiction,Self=help',
                 `Since 1997, The Four Agreements has transformed the lives of millions of people around the world with a simple but profound message.
 
                 Now bestselling author don Miguel Ruiz and his son, don Jose Ruiz, collaborate with this powerful sequel The Fifth Agreement.
@@ -142,13 +145,13 @@ const Books = () => {
             emphasizedPropHelper(
                 b, 'The Mastery of Love',
                 3, 'Miguel Ruiz',
-                'Spirituality,Non-fiction,Self-help',
+                'Spirituality,Non=fiction,Self=help',
                 'In the tradition of Carlos Castaneda, the author distills essential Toltec wisdom on human relationships as well as techniques for integrating this awareness into daily life.'
             )
             emphasizedPropHelper(
                 b, 'The Voice of Knowledge',
                 3, 'Miguel Ruiz',
-                'Spirituality,Non-fiction,Self-help',
+                'Spirituality,Non=fiction,Self=help',
                 `In THE VOICE OF KNOWLEDGE, Miguel Ruiz reminds us of a profound and simple truth: The only way to end our emotional suffering and restore our joy I living is to stop believing in lies - mainly about ourselves. Based on ancient Toltec wisdom, this breakthrough book shows us how to recover our faith in the truth and return to our own common sense.
 
                 Ruiz changes the way we perceive ourselves, and the way we perceive other people. Then he opens the door to a reality that we once perceived when we were one and two years old - a reality of truth, love, and joy.`
@@ -162,7 +165,7 @@ const Books = () => {
             emphasizedPropHelper(
                 b, 'The Selfish Gene',
                 14, 'Richard Dawkins',
-                'Science,Non-fiction,Biology',
+                'Science,Non=fiction,Biology',
                 'Inheriting the mantle of revolutionary biologist from Darwin, Watson, and Crick, Richard Dawkins forced an enormous change in the way we see ourselves and the world with the publication of The Selfish Gene. Suppose, instead of thinking about organisms using genes to reproduce themselves, as we had since Mendel\'s work was rediscovered, we turn it around and imagine that "our" genes build and maintain us in order to make more genes. That simple reversal seems to answer many puzzlers which had stumped scientists for years, and we haven\'t thought of evolution in the same way since. Drawing fascinating examples from every field of biology, he paved the way for a serious re-evaluation of evolution. He also introduced the concept of self-reproducing ideas, or memes, which (seemingly) use humans exclusively for their propagation. If we are puppets, he says, at least we can try to understand our strings.'
             )
             emphasizedPropHelper(
@@ -178,7 +181,7 @@ const Books = () => {
             let manuallyAdjustedIndex = 0;
             arr.forEach((b, i) => {
                 if (b.default.includes('_1')) {
-                    console.log(b);
+                    console.log(b.default);
                     newArr.push(arr[i])
                     newArr[manuallyAdjustedIndex]['title'] = translateNameToBookTitle(b.default);
                     addingDetails(b);
@@ -199,25 +202,28 @@ const Books = () => {
         }
         loadBookDatabase(importAll);
         setBooks(newArr);
-        setDisplayBooks(newArr);
     }, [])
+    useEffect(()=>{
+        console.log(books);
+        setDisplayBooks(books);
+    },[books])
     useEffect(() => {
         console.log(didPriceSortClicked, didAlphaSortClicked);
         const eid = eventName;
         const booksCopy = books;
         if (eid === 'price') {
             if (didPriceSortClicked === true) {
-                booksCopy.sort((a, b) => ((a.price < b.price) ? 1 : -1));
-            } else if (didPriceSortClicked === false) {
                 booksCopy.sort((a, b) => ((a.price > b.price) ? 1 : -1));
+            } else if (didPriceSortClicked === false) {
+                booksCopy.sort((a, b) => ((a.price < b.price) ? 1 : -1));
             }
             setDisplayBooks(booksCopy);
         } else if (eid === 'title') {
             // for (let i = 0; i < booksCopy.length; i++) {
             if (didAlphaSortClicked === true) {
-                booksCopy.sort((a, b) => ((a.title.toUpperCase() < b.title.toUpperCase()) ? 1 : -1));
-            } else if (didAlphaSortClicked === false) {
                 booksCopy.sort((a, b) => ((a.title.toUpperCase() > b.title.toUpperCase()) ? 1 : -1));
+            } else if (didAlphaSortClicked === false) {
+                booksCopy.sort((a, b) => ((a.title.toUpperCase() < b.title.toUpperCase()) ? 1 : -1));
             }
             setDisplayBooks(booksCopy);
             // }
@@ -228,14 +234,76 @@ const Books = () => {
         }
     }, [didPriceSortClicked, didAlphaSortClicked, eventName])
     console.log(displayBooks);
-    const displayAuthorNames = (arr) => {
 
-    }
+    //A visual side effects on bottom-part of side navigation 
     useEffect(() => {
+        //seperate the string by comma
+        function seperateByComma(str) {
+            str = str.split('').map(x => x === '=' ? x = ' ' : x).join('');
+            return str.includes(',') ? str.split(',') : str;
+        }
+        //check whether the property already have specific value
+        function hasPropertyDuplicate(prop, value, data) {
+            let result = null;
+            data.forEach(function (obj, index) {
+                if (prop in obj && obj[prop] === value) {
+                    result = index;
+                    return false;
+                }
+            });
+            return result;
+        }
+        //push property with values using one specific prop names including duplicate count
+        function createArrayOfProp(arr, prop) {
+            let array = []; //array for property counts
+            arr.map((book) => {
+                let indexForDuplicates = null;
+                let currentProp = seperateByComma(book[prop]);
+                if (Array.isArray(currentProp)) {
+                    currentProp.forEach(element => {
+                        indexForDuplicates = hasPropertyDuplicate(prop, element, array);
+                        indexForDuplicates !== null ? array[indexForDuplicates].count += 1 : array.push({ [prop]: element, count: 1 });
+                        indexForDuplicates = null;
+                    })
+                } else {
+                    indexForDuplicates = hasPropertyDuplicate(prop, currentProp, array);
+                    indexForDuplicates !== null ? array[indexForDuplicates].count += 1 : array.push({ [prop]: book[prop], count: 1 })
+                }
+            })
+            array = array.sort((a, b) => ((a[prop].toUpperCase() > b[prop].toUpperCase()) ? 1 : -1));
+            console.log(array);
+            return array;
+        }
+        setAuthorArray(createArrayOfProp(books, ['author']));
+        setGenreArray(createArrayOfProp(books, ['genres']));
+        console.log(authorArray);
+        console.log(genreArray);
+    }, [books])
 
-    })
-    const renderBooks = displayBooks.map((b, i) => {
-        console.log(b);
+    //Iterate books based on the matched value
+    useEffect(()=>{
+        const newArray = [];
+        books.map((book)=>{
+            let genre = book.genres;
+            const author = book.author;
+            if(genre.includes('=')){
+                genre = genre.split('').map(x => x === '=' ? x = ' ' : x).join('');
+            }
+            if(genre.includes(matchValue) || author.includes(matchValue)){
+                newArray.push(book);
+            }
+        })
+        setDisplayBooks(newArray);
+    }, [matchValue])
+    const renderBookDetail = () => {
+        return(
+            <div>
+
+            </div>
+        )
+    }
+    const renderBooks = (arr) => arr.map((b, i) => {
+        console.log('price: ' + b.price + ' title: ' + b.title);
         return (
             <div
                 key={i}
@@ -252,8 +320,8 @@ const Books = () => {
                         <img src={`${b.default}`} width="200px" alt="book"></img>
                     </div>
                 </div>
-                <div>
-                    <p><i className="fas fa-search-plus"></i>click for details</p>
+                <div className="book-display-lower">
+                    <p className="book-click-text"><i className="fas fa-search-plus"></i>click title for details</p>
                     <button className="add-to-cart">
                         <i className="fas fa-shopping-cart"></i>
                         <span className="add-to-cart-text">|Add to cart</span>
@@ -269,12 +337,13 @@ const Books = () => {
                     booksNum={books.length}
                     setDidPriceSortClicked={setDidPriceSortClicked}
                     setDidAlphaSortClicked={setDidAlphaSortClicked}
-                    setDisplayAuthorList={setDisplayAuthorList}
-                    setDisplayGenreList={setDisplayGenreList}
                     setEventName={setEventName}
+                    authorArray={authorArray}
+                    genreArray={genreArray}
+                    setMatchValue={setMatchValue}
                 />
                 <div className="book-display-container">
-                    {renderBooks}
+                    {renderBooks(displayBooks)}
                 </div>
             </div>
         </div>

@@ -133,6 +133,7 @@ li > *{
     text-align: center;
     border: 1px solid rgba(1,1,1,0.4);
     padding: 25px;
+    height: auto;
     .book-display-upper{
       display: flex;
       flex-direction: column;
@@ -145,6 +146,11 @@ li > *{
       .book-title:hover{ text-decoration: underline; }
       .book-author{
         font-weight: 200;
+      }
+    }
+    .book-display-lower{
+      .book-click-text{
+        font-size: 12px;
       }
     }
   }
@@ -184,6 +190,14 @@ li > *{
     font-weight: bold;
   }
 }
+.prop-list{
+  ul{
+    margin-left: -40px;
+  }
+  li{
+    font-size: clamp(0.6vw, 0.8vw, 2rem);
+  }
+}
 .fa-search-plus{
   transform: scale(0.6);
 }
@@ -195,3 +209,5 @@ li > *{
 .add-to-cart:hover{
   transform: scale(1.4);
 }
+/*********BOOK- SECTION*********/
+/*********SHOPPING-CART SECTION*********/

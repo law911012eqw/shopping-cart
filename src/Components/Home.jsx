@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-import Books from './Books';
-import Cart from './Cart';
 const images = require.context('../assets/images/home', true, /\.svg|png|jpg$/);
 const Home = () => {
     const history = useHistory();
     const importAll = images.keys().map(images);
     console.log(importAll);
-    const [routeImages, __] = useState([
+    const [routeImages,_] = useState([
         {
             image: importAll[0].default,
             header: 'Books',
@@ -51,11 +49,11 @@ Most genres are non-fiction, philosophy, some fictions and more`
             }
         });
 
-    }, [])
+    }, [history])
     const homeCard = routeImages.map((prop, i) => {
         return (
             <div
-                id={[...prop.header].map(x => x == x.toUpperCase() ? x.toLowerCase() : x).join('')}
+                id={[...prop.header].map(x => x === x.toUpperCase() ? x.toLowerCase() : x).join('')}
                 className='homecard'
                 key={i}
                 style={{
