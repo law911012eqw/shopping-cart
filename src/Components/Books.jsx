@@ -112,7 +112,7 @@ const Books = () => {
             emphasizedPropHelper(
                 b, 'No Longer Human',
                 4, 'Osamu Dazai',
-                'Fiction,Classics,Asian=Literature',
+                'Fiction,Classics,Asian=Literature,Literature',
                 'Osamu Dazai\'s No Longer Human, this leading postwar Japanese writer\'s second novel, tells the poignant and fascinating story of a young man who is caught between the breakup of the traditions of a northern Japanese aristocratic family and the impact of Western ideas. In consequence, he feels himself "disqualified from being human" (a literal translation of the Japanese title).'
             )
             emphasizedPropHelper(
@@ -206,10 +206,10 @@ const Books = () => {
         loadBookDatabase(importAll);
         setBooks(newArr);
     }, [])
-    useEffect(()=>{
+    useEffect(() => {
         console.log(books);
         setDisplayBooks(books);
-    },[books])
+    }, [books])
     useEffect(() => {
         console.log(didPriceSortClicked, didAlphaSortClicked);
         const eid = eventName;
@@ -281,18 +281,18 @@ const Books = () => {
         setGenreArray(createArrayOfProp(books, ['genres']));
         console.log(authorArray);
         console.log(genreArray);
-    }, [books])
+    }, [books, authorArray, genreArray])
 
     //Iterate books based on the matched value
-    useEffect(()=>{
+    useEffect(() => {
         const newArray = [];
-        books.map((book)=>{
+        books.map(book => {
             let genre = book.genres;
             const author = book.author;
-            if(genre.includes('=')){
+            if (genre.includes('=')) {
                 genre = genre.split('').map(x => x === '=' ? x = ' ' : x).join('');
             }
-            if(genre.includes(matchValue) || author.includes(matchValue)){
+            if (genre.includes(matchValue) || author.includes(matchValue)) {
                 newArray.push(book);
             }
         })
@@ -344,7 +344,7 @@ const Books = () => {
                     {renderBooks(displayBooks)}
                 </div>
             </div>
-            { objForBookDetail.length !== 0 ? <BookDetail objForBookDetail={objForBookDetail} setObjForBookDetail={setObjForBookDetail} /> : null }
+            { objForBookDetail.length !== 0 ? <BookDetail objForBookDetail={objForBookDetail} setObjForBookDetail={setObjForBookDetail} /> : null}
         </div>
     );
 }
