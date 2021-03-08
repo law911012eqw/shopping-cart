@@ -1,35 +1,59 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const Cart = () => {
-
-    const [cartList, setCartList] = useState([]);
-    const renderEmptyText = () => {
-        return (
-            <div className='cart-empty-text'>
-                <p>{`Your shopping cart appears to be empty.`}</p>
-            </div>
-        );
+const Cart = ({ cartList, setCartList }) => {
+    //sub components
+    const [total, setTotal] = useState(0.00);
+    console.log(cartList);
+    const clearCartList = () => setCartList([]);
+    const RenderEmptyText = () => {
+        return <h2 className='cart-empty-text'>Your shopping cart appears to be empty.</h2>
     }
-    const renderCart = () => {
+    useEffect(() => {
+        let tempTotal = total
+        cartList.map((item) => {
+            tempTotal += item.price;
+        })
+        setTotal(tempTotal);
+    }, [cartList])
+    const RenderCart = () => {
         return (
             <div className='Cart'>
                 <h1>Shopping Cart</h1>
-                <div className="shoppping-cart-wrapper">
-                    <div className="shopping-cart-list"></div>
+                <div className="shopping-cart-wrapper">
+                    <div className="shopping-cart-list">
+                        <div id="cart-table-header" className="shopping-cart-item">
+                            <span>Book title and author</span>
+                            <span>Book cost</span>
+                        </div>
+                        {cartList.map((item) => {
+                            return (
+                                <div className="shopping-cart-item">
+                                    <span className="shopping-item-book">{item.title} by | {item.author}</span>
+                                    <span className="shopping-item-cost">$ {item.price}</span>
+                                </div>
+                            )
+                        })}
+                        <div id="total" className="shopping-cart-item">
+                            <span>Total: ${total}</span>
+                        </div>
+                    </div>
                     <div className="cart-btn-wrapper">
-                        <button className="btn-cancel">Cancel</button>
-                        <button className="btn-payment">Pay</button>
+                        <button onClick={() => clearCartList()} className="btn-cancel">Clear All</button>
+                        <button className="btn-payment">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span className="add-to-cart-text"> Pay books</span>
+                        </button>
                     </div>
                 </div>
             </div>
         );
-
     }
     return (
         <div>
-            { cartList.length != 0 ? renderCart  : renderEmptyText }
+            { cartList.length !== 0 ? <RenderCart /> : <RenderEmptyText />}
         </div>
     );
 }
+
 
 export default Cart;

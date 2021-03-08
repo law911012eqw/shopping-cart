@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
 
 import Home from './Home';
@@ -6,6 +6,7 @@ import Books from './Books';
 import Cart from './Cart';
 import logo from '../assets/images/shoppingcart-logo.png'
 const Nav = () => {
+    const [cartList, setCartList] = useState([]);
     const quote = `Sell used books at reasonably low price`;
     return (
         <Router>
@@ -45,9 +46,15 @@ const Nav = () => {
                 </nav>
 
                 <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route path="/Books" component={Books} />
-                    <Route path="/Cart" component={Cart} />
+                    <Route exact path="/">
+                        <Home />
+                    </Route>
+                    <Route path="/Books">
+                        <Books cartList={cartList} setCartList={setCartList} s/>
+                    </Route>
+                    <Route path="/Cart">
+                        <Cart cartList={cartList} setCartList={setCartList}/>
+                    </Route>
                 </Switch>
             </div>
         </Router>

@@ -7,7 +7,7 @@ const images = require.context('../assets/images/books', true, /\.svg|png|jpg$/)
 //The heart of the project compels me to deny myself at resorting to auto mapping and manually create specific details about the book 
 //rather than doing auto-adding random value on every propeties in each iteration which seems to adjust effort points or provides a weak essence of a shopping cart webpage.
 //Adding some specific details about the book especially price but the rest such as count will be implemented automatically by functions
-const Books = () => {
+const Books = ({ cartList, setCartList }) => {
     //Reserved array of book objects for later
     const [books, setBooks] = useState([]);
 
@@ -42,7 +42,7 @@ const Books = () => {
     //Trigger these side effects after the initial render
     //Auto adding images
     useEffect(() => {
-        console.log('Manuall add info associated with the books');
+        console.log('Manually add info associated with the books');
         const newArr = [];
         //Manually adding value to each emphasized properties
         function addingDetails(b) {
@@ -189,6 +189,7 @@ const Books = () => {
                     newArr.push(arr[i])
                     newArr[manuallyAdjustedIndex]['title'] = translateNameToBookTitle(b.default);
                     addingDetails(b);
+                    //newArr[manuallyAdjustedIndex]['addedToCart'] = false;
                 } else if (b.default.includes('_2')) {
                     newArr[manuallyAdjustedIndex]['open'] = b.default;
                 } else {
@@ -277,7 +278,7 @@ const Books = () => {
         }
         setAuthorArray(createArrayOfProp(books, ['author']));
         setGenreArray(createArrayOfProp(books, ['genres']));
-    }, [books])
+    }, [displayBooks, authorArray])
 
     //Iterate books based on the matched value
     useEffect(() => {
@@ -295,8 +296,22 @@ const Books = () => {
         })
         setDisplayBooks(newArray);
     }, [matchValue])
+    //reset added to cart indication if the cartlist length is 0
+    // useEffect(() => {
+    //     if (cartList.length !== 0) {
+    //         [...displayBooks].map((item) => {
+    //             item.addedToCart = false;
+    //         })
+    //         //setDisplayBooks(newArr);
+    //     }
+    // }, [cartList])
     const renderBooks = (arr) => arr.map((b, i) => {
         const handleBookDetail = () => setObjForBookDetail(b);
+        const newArr = [...displayBooks];
+
+        const toggleAddedToCart = () => {
+            setCartList([...cartList, b])
+        }
         return (
             <div
                 key={i}
@@ -315,9 +330,9 @@ const Books = () => {
                 </div>
                 <div className="book-display-lower">
                     <p className="book-click-text"><i className="fas fa-search-plus"></i>click title for details</p>
-                    <button className="add-to-cart">
+                    <button onClick={() => toggleAddedToCart()} className="add-to-cart">
                         <i className="fas fa-shopping-cart"></i>
-                        <span className="add-to-cart-text">|Add to cart</span>
+                        <span className="add-to-cart-text">|{' Add to cart'}</span>
                     </button>
                 </div>
             </div>

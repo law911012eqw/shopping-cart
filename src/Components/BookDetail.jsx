@@ -4,7 +4,7 @@ const BookDetail = ({objForBookDetail, setObjForBookDetail}) => {
     const obj = objForBookDetail; //renaming the object to shorter name
     const [genreArr, setGenreArr] = useState([]);
     const [slideIndex, setSlideIndex] = useState(0); //images prop elements
-    const [currentImage, setCurrentImage] = useState(obj.default)
+    const [currentImage, setCurrentImage] = useState()
     const handleClick = () => { 
         setObjForBookDetail(null); 
         console.log(objForBookDetail);
@@ -36,11 +36,12 @@ const BookDetail = ({objForBookDetail, setObjForBookDetail}) => {
         const dots = document.getElementsByClassName("isc");
         if (slideIndex > imageArray.length) { setSlideIndex(1) }
         if (slideIndex < 1) { setSlideIndex(imageArray.length) }
+        console.log(currentImgProp);
         setCurrentImage(obj[currentImgProp]);
         for (i = 0; i < dots.length; i++) {
             dots[i].className = dots[i].className.replace(" current", "");
         }
-        dots[0].className += " current";
+        dots[2].className += ' current';
     }, [slideIndex])
     return (
         <div className="modal">
