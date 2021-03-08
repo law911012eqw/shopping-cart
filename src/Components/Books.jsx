@@ -29,7 +29,7 @@ const Books = () => {
     //mapping the entire book iamges
     const importAll = images.keys().map(images);
 
-    const [objForBookDetail, setObjForBookDetail] = useState([]);
+    const [objForBookDetail, setObjForBookDetail] = useState(null);
     //Helpers
     const emphasizedPropHelper = (b, title, price, author, genres, desc) => {
         if (b.title === title) {
@@ -42,6 +42,7 @@ const Books = () => {
     //Trigger these side effects after the initial render
     //Auto adding images
     useEffect(() => {
+        console.log('Manuall add info associated with the books');
         const newArr = [];
         //Manually adding value to each emphasized properties
         function addingDetails(b) {
@@ -207,7 +208,6 @@ const Books = () => {
         setBooks(newArr);
     }, [])
     useEffect(() => {
-        console.log(books);
         setDisplayBooks(books);
     }, [books])
     useEffect(() => {
@@ -222,24 +222,23 @@ const Books = () => {
             }
             setDisplayBooks(booksCopy);
         } else if (eid === 'title') {
-            // for (let i = 0; i < booksCopy.length; i++) {
             if (didAlphaSortClicked === true) {
                 booksCopy.sort((a, b) => ((a.title.toUpperCase() > b.title.toUpperCase()) ? 1 : -1));
             } else if (didAlphaSortClicked === false) {
                 booksCopy.sort((a, b) => ((a.title.toUpperCase() < b.title.toUpperCase()) ? 1 : -1));
             }
             setDisplayBooks(booksCopy);
-            // }
         } else if (eid === 'library') {
             setDisplayBooks(books);
             setDidPriceSortClicked('undefined');
             setDidAlphaSortClicked('undefined');
         }
-    }, [didPriceSortClicked, didAlphaSortClicked, eventName])
-    console.log(displayBooks);
+    }, [displayBooks, didPriceSortClicked, didAlphaSortClicked])
+    console.log(displayBooks, didPriceSortClicked, didAlphaSortClicked);
 
     //A visual side effects on bottom-part of side navigation 
     useEffect(() => {
+        console.log('Nav bottom part');
         //seperate the string by comma
         function seperateByComma(str) {
             str = str.split('').map(x => x === '=' ? x = ' ' : x).join('');
@@ -259,7 +258,7 @@ const Books = () => {
         //push property with values using one specific prop names including duplicate count
         function createArrayOfProp(arr, prop) {
             let array = []; //array for property counts
-            arr.map((book) => {
+            arr.forEach((book) => {
                 let indexForDuplicates = null;
                 let currentProp = seperateByComma(book[prop]);
                 if (Array.isArray(currentProp)) {
@@ -274,19 +273,17 @@ const Books = () => {
                 }
             })
             array = array.sort((a, b) => ((a[prop].toUpperCase() > b[prop].toUpperCase()) ? 1 : -1));
-            console.log(array);
             return array;
         }
         setAuthorArray(createArrayOfProp(books, ['author']));
         setGenreArray(createArrayOfProp(books, ['genres']));
-        console.log(authorArray);
-        console.log(genreArray);
-    }, [books, authorArray, genreArray])
+    }, [books])
 
     //Iterate books based on the matched value
     useEffect(() => {
+        console.log('Iterate books based on matched value');
         const newArray = [];
-        books.map(book => {
+        books.forEach(book => {
             let genre = book.genres;
             const author = book.author;
             if (genre.includes('=')) {
@@ -300,8 +297,6 @@ const Books = () => {
     }, [matchValue])
     const renderBooks = (arr) => arr.map((b, i) => {
         const handleBookDetail = () => setObjForBookDetail(b);
-        console.log(objForBookDetail);
-        console.log('price: ' + b.price + ' title: ' + b.title);
         return (
             <div
                 key={i}
@@ -344,7 +339,7 @@ const Books = () => {
                     {renderBooks(displayBooks)}
                 </div>
             </div>
-            { objForBookDetail.length !== 0 ? <BookDetail objForBookDetail={objForBookDetail} setObjForBookDetail={setObjForBookDetail} /> : null}
+            { objForBookDetail !== null ? <BookDetail objForBookDetail={objForBookDetail} setObjForBookDetail={setObjForBookDetail} /> : null}
         </div>
     );
 }
