@@ -20,7 +20,7 @@ const Nav = () => {
                     <ul>
                         <li>
                             <NavLink
-                                exact to="/shopping-cart/Home"
+                                exact to="/shopping-cart/"
                                 activeStyle={{
                                     fontWeight: "bold",
                                 }}

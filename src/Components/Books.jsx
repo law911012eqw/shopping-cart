@@ -16,6 +16,7 @@ const Books = ({ cartList, setCartList }) => {
     const [authorArray, setAuthorArray] = useState([]);
     const [genreArray, setGenreArray] = useState([]);
 
+    const [renderTwice, setRenderTwice] = useState(true);
     //trigger states that changes for every click event on the proper elements associated with it
     const [didPriceSortClicked, setDidPriceSortClicked] = useState(undefined); //true -> up; false -> down
     const [didAlphaSortClicked, setDidAlphaSortClicked] = useState(undefined); //true -> up; false -> down
@@ -212,37 +213,49 @@ const Books = ({ cartList, setCartList }) => {
     }, [books])
     //A side effects that manually tracks the clicked DOMs and control the sorting functionality of the display array
     useEffect(() => {
-            console.log(didPriceSortClicked, didAlphaSortClicked);
             const eid = eventName;
             const booksCopy = books;
+            console.log(didPriceSortClicked, didAlphaSortClicked);
             if (eid === 'price') {
                 if (didPriceSortClicked === true) {
                     booksCopy.sort((a, b) => ((a.price > b.price) ? 1 : -1));
                 } else if (didPriceSortClicked === false) {
                     booksCopy.sort((a, b) => ((a.price < b.price) ? 1 : -1));
                 }
-                setDisplayBooks(booksCopy);
-                console.log(booksCopy);
+                if(renderTwice=== true) {
+                    console.log('rendered twice');
+                    setDisplayBooks([...displayBooks], booksCopy);
+                    setRenderTwice(false);
+                } else{
+                    console.log('rendered once');
+                    setDisplayBooks(booksCopy);
+                    setRenderTwice(true);
+                }
             } else if (eid === 'title') {
                 if (didAlphaSortClicked === true) {
                     booksCopy.sort((a, b) => ((a.title.toUpperCase() > b.title.toUpperCase()) ? 1 : -1));
                 } else if (didAlphaSortClicked === false) {
                     booksCopy.sort((a, b) => ((a.title.toUpperCase() < b.title.toUpperCase()) ? 1 : -1));
                 }
-                setDisplayBooks(booksCopy);
+                if(renderTwice=== true) {
+                    setDisplayBooks([...displayBooks], booksCopy);
+                    setRenderTwice(false);
+                } else{
+                    setDisplayBooks(booksCopy);
+                    setRenderTwice(true);
+                }
             } else if (eid === 'library') {
                 setDisplayBooks(books);
+                setRenderTwice(false);
                 setDidPriceSortClicked('undefined');
                 setDidAlphaSortClicked('undefined');
             }
-    }, [displayBooks, didPriceSortClicked, didAlphaSortClicked])
-    console.log(displayBooks, didPriceSortClicked, didAlphaSortClicked);
-
+    }, [didPriceSortClicked, didAlphaSortClicked])
+    console.log(displayBooks);
     //A visual side effects on bottom-part of side navigation 
     useEffect(() => {
         //seperate the string by comma
         function seperateByComma(str) {
-            console.log(str);
             str = str.split('').map(x => x === '=' ? x = ' ' : x).join('');
             return str.includes(',') ? str.split(',') : str;
         }
@@ -261,7 +274,6 @@ const Books = ({ cartList, setCartList }) => {
         function createArrayOfProp(arr, prop) {
             let array = []; //array for property counts
             arr.forEach((book) => {
-                console.log(book);
                 let indexForDuplicates = null;
                 let currentProp = seperateByComma(book[prop]);
                 //Do the following conditions if it's array
