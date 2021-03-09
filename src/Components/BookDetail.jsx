@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-const BookDetail = ({objForBookDetail, setObjForBookDetail}) => {
+const BookDetail = ({ objForBookDetail, setObjForBookDetail, cartList, setCartList }) => {
     const obj = objForBookDetail; //renaming the object to shorter name
     const [genreArr, setGenreArr] = useState([]);
     const [slideIndex, setSlideIndex] = useState(0); //images prop elements
     const [currentImage, setCurrentImage] = useState()
-    const handleClick = () => { 
-        setObjForBookDetail(null); 
-        console.log(objForBookDetail);
-    }
+    const handleClick = () => setObjForBookDetail(null);
     const imageArray = ['default', 'open', 'back'];
 
     useEffect(() => {
@@ -21,27 +18,29 @@ const BookDetail = ({objForBookDetail, setObjForBookDetail}) => {
     }, [])
     const renderGenres = genreArr.map((genre, i) => {
         return (
-            <div className="book-detail-genre">
+            <div key={i} className="book-detail-genre">
                 {genre}
             </div>
         )
     })
     const plusSlides = (n) => {
-        console.log(slideIndex);
-        setSlideIndex(slideIndex+n);
+        const modifiedIndex = slideIndex + n;
+        if (modifiedIndex >= imageArray.length) { setSlideIndex(0); }
+        else if (modifiedIndex < 0) { setSlideIndex(imageArray.length - 1); }
+        else { setSlideIndex(modifiedIndex); }
+    }
+    const toggleAddedToCart = () => {
+        setCartList([...cartList, objForBookDetail]);
     }
     useEffect(() => {
         let i;
         const currentImgProp = imageArray[slideIndex];
         const dots = document.getElementsByClassName("isc");
-        if (slideIndex > imageArray.length) { setSlideIndex(1) }
-        if (slideIndex < 1) { setSlideIndex(imageArray.length) }
-        console.log(currentImgProp);
         setCurrentImage(obj[currentImgProp]);
         for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" current", "");
+            dots[i].className = dots[i].className.replace("current", "");
         }
-        dots[2].className += ' current';
+        dots[slideIndex].classList.add("current");
     }, [slideIndex])
     return (
         <div className="modal">
@@ -69,7 +68,7 @@ const BookDetail = ({objForBookDetail, setObjForBookDetail}) => {
                         </div>
                         <div className="book-detail-cart-wrapper">
                             <div className="book-detail-price-tag">{`$ `}{obj.price}</div>
-                            <button className="add-to-cart">
+                            <button onClick={() => toggleAddedToCart()} className="add-to-cart">
                                 <i className="fas fa-shopping-cart"></i>
                                 <span className="add-to-cart-text">|Add to cart</span>
                             </button>

@@ -42,7 +42,6 @@ const Books = ({ cartList, setCartList }) => {
     //Trigger these side effects after the initial render
     //Auto adding images
     useEffect(() => {
-        console.log('Manually add info associated with the books');
         const newArr = [];
         //Manually adding value to each emphasized properties
         function addingDetails(b) {
@@ -185,7 +184,6 @@ const Books = ({ cartList, setCartList }) => {
             let manuallyAdjustedIndex = 0;
             arr.forEach((b, i) => {
                 if (b.default.includes('_1')) {
-                    console.log(b.default);
                     newArr.push(arr[i])
                     newArr[manuallyAdjustedIndex]['title'] = translateNameToBookTitle(b.default);
                     addingDetails(b);
@@ -208,38 +206,40 @@ const Books = ({ cartList, setCartList }) => {
         loadBookDatabase(importAll);
         setBooks(newArr);
     }, [])
+    //set the pinnacle database of books as a reference to a copy which is used to display using map iteration
     useEffect(() => {
         setDisplayBooks(books);
     }, [books])
+    //A side effects that manually tracks the clicked DOMs and control the sorting functionality of the display array
     useEffect(() => {
-        console.log(didPriceSortClicked, didAlphaSortClicked);
-        const eid = eventName;
-        const booksCopy = books;
-        if (eid === 'price') {
-            if (didPriceSortClicked === true) {
-                booksCopy.sort((a, b) => ((a.price > b.price) ? 1 : -1));
-            } else if (didPriceSortClicked === false) {
-                booksCopy.sort((a, b) => ((a.price < b.price) ? 1 : -1));
+            console.log(didPriceSortClicked, didAlphaSortClicked);
+            const eid = eventName;
+            const booksCopy = books;
+            if (eid === 'price') {
+                if (didPriceSortClicked === true) {
+                    booksCopy.sort((a, b) => ((a.price > b.price) ? 1 : -1));
+                } else if (didPriceSortClicked === false) {
+                    booksCopy.sort((a, b) => ((a.price < b.price) ? 1 : -1));
+                }
+                setDisplayBooks(booksCopy);
+                console.log(booksCopy);
+            } else if (eid === 'title') {
+                if (didAlphaSortClicked === true) {
+                    booksCopy.sort((a, b) => ((a.title.toUpperCase() > b.title.toUpperCase()) ? 1 : -1));
+                } else if (didAlphaSortClicked === false) {
+                    booksCopy.sort((a, b) => ((a.title.toUpperCase() < b.title.toUpperCase()) ? 1 : -1));
+                }
+                setDisplayBooks(booksCopy);
+            } else if (eid === 'library') {
+                setDisplayBooks(books);
+                setDidPriceSortClicked('undefined');
+                setDidAlphaSortClicked('undefined');
             }
-            setDisplayBooks(booksCopy);
-        } else if (eid === 'title') {
-            if (didAlphaSortClicked === true) {
-                booksCopy.sort((a, b) => ((a.title.toUpperCase() > b.title.toUpperCase()) ? 1 : -1));
-            } else if (didAlphaSortClicked === false) {
-                booksCopy.sort((a, b) => ((a.title.toUpperCase() < b.title.toUpperCase()) ? 1 : -1));
-            }
-            setDisplayBooks(booksCopy);
-        } else if (eid === 'library') {
-            setDisplayBooks(books);
-            setDidPriceSortClicked('undefined');
-            setDidAlphaSortClicked('undefined');
-        }
-    }, [displayBooks, didPriceSortClicked, didAlphaSortClicked])
+    }, [...displayBooks, didPriceSortClicked, didAlphaSortClicked])
     console.log(displayBooks, didPriceSortClicked, didAlphaSortClicked);
 
     //A visual side effects on bottom-part of side navigation 
     useEffect(() => {
-        console.log('Nav bottom part');
         //seperate the string by comma
         function seperateByComma(str) {
             str = str.split('').map(x => x === '=' ? x = ' ' : x).join('');
@@ -262,13 +262,14 @@ const Books = ({ cartList, setCartList }) => {
             arr.forEach((book) => {
                 let indexForDuplicates = null;
                 let currentProp = seperateByComma(book[prop]);
+                //if it's array do the following
                 if (Array.isArray(currentProp)) {
                     currentProp.forEach(element => {
                         indexForDuplicates = hasPropertyDuplicate(prop, element, array);
                         indexForDuplicates !== null ? array[indexForDuplicates].count += 1 : array.push({ [prop]: element, count: 1 });
                         indexForDuplicates = null;
                     })
-                } else {
+                } else { //otherwise either increment if it's a duplicate or push these elements if it's a new one
                     indexForDuplicates = hasPropertyDuplicate(prop, currentProp, array);
                     indexForDuplicates !== null ? array[indexForDuplicates].count += 1 : array.push({ [prop]: book[prop], count: 1 })
                 }
@@ -278,11 +279,10 @@ const Books = ({ cartList, setCartList }) => {
         }
         setAuthorArray(createArrayOfProp(books, ['author']));
         setGenreArray(createArrayOfProp(books, ['genres']));
-    }, [displayBooks, authorArray])
+    }, [displayBooks])
 
     //Iterate books based on the matched value
     useEffect(() => {
-        console.log('Iterate books based on matched value');
         const newArray = [];
         books.forEach(book => {
             let genre = book.genres;
@@ -307,8 +307,6 @@ const Books = ({ cartList, setCartList }) => {
     // }, [cartList])
     const renderBooks = (arr) => arr.map((b, i) => {
         const handleBookDetail = () => setObjForBookDetail(b);
-        const newArr = [...displayBooks];
-
         const toggleAddedToCart = () => {
             setCartList([...cartList, b])
         }
@@ -354,7 +352,13 @@ const Books = ({ cartList, setCartList }) => {
                     {renderBooks(displayBooks)}
                 </div>
             </div>
-            { objForBookDetail !== null ? <BookDetail objForBookDetail={objForBookDetail} setObjForBookDetail={setObjForBookDetail} /> : null}
+            { objForBookDetail !== null
+                ? <BookDetail
+                    objForBookDetail={objForBookDetail}
+                    setObjForBookDetail={setObjForBookDetail}
+                    cartList={cartList}
+                    setCartList={setCartList}
+                /> : null}
         </div>
     );
 }

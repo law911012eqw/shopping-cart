@@ -3,14 +3,13 @@ import React, { useEffect, useState } from 'react';
 const Cart = ({ cartList, setCartList }) => {
     //sub components
     const [total, setTotal] = useState(0.00);
-    console.log(cartList);
     const clearCartList = () => setCartList([]);
     const RenderEmptyText = () => {
         return <h2 className='cart-empty-text'>Your shopping cart appears to be empty.</h2>
     }
     useEffect(() => {
         let tempTotal = total
-        cartList.map((item) => {
+        cartList.forEach((item) => {
             tempTotal += item.price;
         })
         setTotal(tempTotal);

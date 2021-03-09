@@ -6,7 +6,6 @@ const images = require.context('../assets/images/home', true, /\.svg|png|jpg$/);
 const Home = () => {
     const history = useHistory();
     const importAll = images.keys().map(images);
-    console.log(importAll);
     const [routeImages,_] = useState([
         {
             image: importAll[0].default,
