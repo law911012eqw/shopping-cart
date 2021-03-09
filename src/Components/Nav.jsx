@@ -20,7 +20,7 @@ const Nav = () => {
                     <ul>
                         <li>
                             <NavLink
-                                exact to="shopping-cart/"
+                                exact to="/"
                                 activeStyle={{
                                     fontWeight: "bold",
                                 }}
@@ -28,7 +28,7 @@ const Nav = () => {
                         </li>
                         <li>
                             <NavLink
-                                to="shopping-cart/Books"
+                                to="/Books"
                                 activeStyle={{
                                     fontWeight: "bold",
                                 }}
@@ -36,7 +36,7 @@ const Nav = () => {
                         </li>
                         <li>
                         <NavLink
-                                to="shopping-cart/Cart"
+                                to="/Cart"
                                 activeStyle={{
                                     fontWeight: "bold",
                                 }}
@@ -46,13 +46,13 @@ const Nav = () => {
                 </nav>
 
                 <Switch>
-                    <Route exact path="shopping-cart/">
+                    <Route exact path="/">
                         <Home />
                     </Route>
-                    <Route path="shopping-cart/Books">
-                        <Books cartList={cartList} setCartList={setCartList} s/>
+                    <Route path="/Books">
+                        <Books cartList={cartList} setCartList={setCartList}/>
                     </Route>
-                    <Route path="shopping-cart/Cart">
+                    <Route path="/Cart">
                         <Cart cartList={cartList} setCartList={setCartList}/>
                     </Route>
                 </Switch>

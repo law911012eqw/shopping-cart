@@ -2,7 +2,7 @@
   "name": "asdas",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./",
+  "homepage": "https://law911012eqw.github.io/shopping-cart/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
