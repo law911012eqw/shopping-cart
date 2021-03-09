@@ -39,9 +39,9 @@ Most genres are non-fiction, philosophy, some fictions and more`
             element.onclick = (e) => {
                 e.stopPropagation();
                 if (e.target.id === 'books') {
-                    history.push('/Books');
+                    history.push('/shopping-cart/Books');
                 } else if (e.target.id === 'cart') {
-                    history.push('/Cart');
+                    history.push('/shopping-cart/Cart');
                 } else if (e.target.id === 'github') {
                     window.location.replace('https://github.com/law911012eqw/shopping-cart');
                 }

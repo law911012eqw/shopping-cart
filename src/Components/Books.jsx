@@ -200,7 +200,7 @@ const Books = ({ cartList, setCartList }) => {
             //First replace all hyphens with spaces
             str = str.split('').map(x => x === '-' ? x = ' ' : x).join('');
             //then remove the path from parent directories to display the title
-            str = str.replace(`/static/media/`, '').split('_');
+            str = str.replace(`/shopping cart/static/media/`, '').split('_');
             return str[0].replace(/([A-Z])/g, ' $1').trim();
         }
         loadBookDatabase(importAll);
@@ -235,13 +235,14 @@ const Books = ({ cartList, setCartList }) => {
                 setDidPriceSortClicked('undefined');
                 setDidAlphaSortClicked('undefined');
             }
-    }, [...displayBooks, didPriceSortClicked, didAlphaSortClicked])
+    }, [displayBooks, didPriceSortClicked, didAlphaSortClicked])
     console.log(displayBooks, didPriceSortClicked, didAlphaSortClicked);
 
     //A visual side effects on bottom-part of side navigation 
     useEffect(() => {
         //seperate the string by comma
         function seperateByComma(str) {
+            console.log(str);
             str = str.split('').map(x => x === '=' ? x = ' ' : x).join('');
             return str.includes(',') ? str.split(',') : str;
         }
@@ -260,9 +261,10 @@ const Books = ({ cartList, setCartList }) => {
         function createArrayOfProp(arr, prop) {
             let array = []; //array for property counts
             arr.forEach((book) => {
+                console.log(book);
                 let indexForDuplicates = null;
                 let currentProp = seperateByComma(book[prop]);
-                //if it's array do the following
+                //Do the following conditions if it's array
                 if (Array.isArray(currentProp)) {
                     currentProp.forEach(element => {
                         indexForDuplicates = hasPropertyDuplicate(prop, element, array);
