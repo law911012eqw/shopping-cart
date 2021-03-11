@@ -9,7 +9,7 @@ Technologies/Tools used:
 * React/React Hooks/React Router
 
 ### Todos
-[] Apply media queries for popular viewports(Enhancement)
-[] Refactor code(Code efficiency)
-[] Use array methods away from comfort zone(Complexity & efficiency)
-[] Enhancement of adding books to the cart(Enhancement)
+- [ ] Apply media queries for popular viewports(Enhancement)
+- [ ] Refactor code(Code efficiency)
+- [ ] Use array methods away from comfort zone(Complexity & efficiency)
+- [ ] Enhancement of adding books to the cart(Enhancement)
