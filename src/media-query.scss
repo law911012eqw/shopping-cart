@@ -1,0 +1,72 @@
+@import './App.scss';
+
+//Reusable functions
+@mixin mobile-viewport(
+    $bks-wrp-mg, //book wrapper margin
+    $bk-dp-mg, //book display margin
+    $bk-dp-pd, //book display padding
+    $bk-dp-prc-wh, //book-display price container width and height
+    $bk-dp-prc-mg, //book-display price container margin-top and left
+    $bk-dp-img, //width of book display image
+    $bk-ttl, //width of book title
+    $bk-nav-list, //margin-left of book nav list
+    $logo-mg-left, //margin left of website simple motto
+    $logo-mg-top, //margin-top of website simple motto
+    $logo-w, //logo width
+    $bd-w, //book detail width
+    $bd-h //book detail height
+){
+    .books-wrapper{ margin:$bks-wrp-mg;}
+    .book-display{ margin: $bk-dp-mg;}
+    .book-display{ padding: $bk-dp-pd + px; }
+    .book-display-price-container{
+        width: $bk-dp-prc-wh + px;
+        height: $bk-dp-prc-wh + px;
+        margin-top: $bk-dp-prc-mg + px;
+        margin-left: $bk-dp-prc-mg + px;
+    }
+    .book-detail-img{ width: ($bk-dp-img * .75) + px}
+    .book-display-img{ width: $bk-dp-img + px }
+    .book-title{ width: $bk-ttl + px }
+    .Books-Nav > ul{ margin-left: $bk-nav-list + px }
+    .logo > span { 
+        margin-left: $logo-mg-left + px;
+        margin-top: $logo-mg-top + px;
+    }
+    .rineria{ width: $logo-w + px }
+    .Book-Detail{
+        width: $bd-w + vw;
+        height: $bd-h + vh;
+    }
+}
+
+@media ( max-width: 399px ){
+    @include mobile-viewport(5px 0, 4px 8px, 5, 30, -18, 70, 120, -44, 6, -11, 110, 95, 65);
+    .Books-Nav{ display: none; }
+    .homecard{ flex-basis: 50%; }
+}
+@media (min-width: 400px) and (max-width: 599px){
+    @include mobile-viewport(5px 0, 6px 12px, 10, 30, -22, 80, 140, -44, 11, -15, 150, 95, 65);
+    .homecard{ flex-basis: 50%; }
+    .Books-Nav{ display: none; }
+}
+@media (min-width: 600px) and (max-width: 899px){
+    @include mobile-viewport(18px 0px, 7px 14px, 10, 30, -22, 90, 160, -28, 16, -18, 200, 80, 65);
+    .homecard{ flex-basis: 25%; }
+    .Books-Nav{ display: none; }
+}
+@media (min-width: 900px) and (max-width: 1349px){
+    @include mobile-viewport(25px 13px 25px 26px, 10px 20px, 20, 40, -40, 150, 180, -28, 18, -23, 250, 60, 60);
+    .homecard{ flex-basis: 25%; }
+    .Books-Nav{ @include flexbox-col(); }
+}
+@media ( min-width: 1350px ){
+    @include mobile-viewport(34px 18px 34px 28px, 10px 20px, 25, 50, -40, 200, 200, -12, 20, -28, 300, 50, 60);
+    .Books-Nav{ @include flexbox-col(); }
+    .homecard{ flex-basis: 25%; }
+}
+@media ( max-height: 500px ) and (orientation: landscape){
+    @include mobile-viewport(34px 18px 34px 28px, 10px 20px, 25, 50, -40, 75, 200, -12, 20, -17, 200, 65, 90);
+    .Books-Nav{ display: none; }
+    .homecard{ flex-basis: 25%; }
+}

@@ -46,13 +46,13 @@ const BookDetail = ({ objForBookDetail, setObjForBookDetail, cartList, setCartLi
         <div className="modal">
             <div className="Book-Detail">
                 <div className="book-detail-info">
-                    <div>
+                    <div className="book-detail-upper">
                         <h3 className="book-title">{obj.title}</h3>
                         <h5 className="book-author">{`by | ${obj.author}`}</h5>
                         <div className="img-slider">
                             <div className="img-slider-main">
                                 <button onClick={() => plusSlides(-1)}><i className="fas fa-caret-left"></i></button>
-                                <img className="book-detail-current-image" src={currentImage} alt="book"></img>
+                                <img className="book-detail-img" src={currentImage} alt="book"></img>
                                 <button onClick={() => plusSlides(+1)}><i className="fas fa-caret-right"></i></button>
                             </div>
                             <div className="dots">
@@ -62,7 +62,7 @@ const BookDetail = ({ objForBookDetail, setObjForBookDetail, cartList, setCartLi
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div className="book-detail-lower">
                         <div className="book-detail-genre-list">
                             {renderGenres}
                         </div>

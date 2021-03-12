@@ -213,43 +213,42 @@ const Books = ({ cartList, setCartList }) => {
     }, [books])
     //A side effects that manually tracks the clicked DOMs and control the sorting functionality of the display array
     useEffect(() => {
-            const eid = eventName;
-            const booksCopy = books;
-            console.log(didPriceSortClicked, didAlphaSortClicked);
-            if (eid === 'price') {
-                if (didPriceSortClicked === true) {
-                    booksCopy.sort((a, b) => ((a.price > b.price) ? 1 : -1));
-                } else if (didPriceSortClicked === false) {
-                    booksCopy.sort((a, b) => ((a.price < b.price) ? 1 : -1));
-                }
-                if(renderTwice=== true) {
-                    console.log('rendered twice');
-                    setDisplayBooks([...displayBooks], booksCopy);
-                    setRenderTwice(false);
-                } else{
-                    console.log('rendered once');
-                    setDisplayBooks(booksCopy);
-                    setRenderTwice(true);
-                }
-            } else if (eid === 'title') {
-                if (didAlphaSortClicked === true) {
-                    booksCopy.sort((a, b) => ((a.title.toUpperCase() > b.title.toUpperCase()) ? 1 : -1));
-                } else if (didAlphaSortClicked === false) {
-                    booksCopy.sort((a, b) => ((a.title.toUpperCase() < b.title.toUpperCase()) ? 1 : -1));
-                }
-                if(renderTwice=== true) {
-                    setDisplayBooks([...displayBooks], booksCopy);
-                    setRenderTwice(false);
-                } else{
-                    setDisplayBooks(booksCopy);
-                    setRenderTwice(true);
-                }
-            } else if (eid === 'library') {
-                setDisplayBooks(books);
-                setRenderTwice(false);
-                setDidPriceSortClicked('undefined');
-                setDidAlphaSortClicked('undefined');
+        const eid = eventName;
+        const booksCopy = books;
+        if (eid === 'price') {
+            if (didPriceSortClicked === true) {
+                booksCopy.sort((a, b) => ((a.price > b.price) ? 1 : -1));
+            } else if (didPriceSortClicked === false) {
+                booksCopy.sort((a, b) => ((a.price < b.price) ? 1 : -1));
             }
+            if (renderTwice === true) {
+                console.log('rendered twice');
+                setDisplayBooks([...displayBooks], booksCopy);
+                setRenderTwice(false);
+            } else {
+                console.log('rendered once');
+                setDisplayBooks(booksCopy);
+                setRenderTwice(true);
+            }
+        } else if (eid === 'title') {
+            if (didAlphaSortClicked === true) {
+                booksCopy.sort((a, b) => ((a.title.toUpperCase() > b.title.toUpperCase()) ? 1 : -1));
+            } else if (didAlphaSortClicked === false) {
+                booksCopy.sort((a, b) => ((a.title.toUpperCase() < b.title.toUpperCase()) ? 1 : -1));
+            }
+            if (renderTwice === true) {
+                setDisplayBooks([...displayBooks], booksCopy);
+                setRenderTwice(false);
+            } else {
+                setDisplayBooks(booksCopy);
+                setRenderTwice(true);
+            }
+        } else if (eid === 'library') {
+            setDisplayBooks(books);
+            setRenderTwice(false);
+            setDidPriceSortClicked('undefined');
+            setDidAlphaSortClicked('undefined');
+        }
     }, [didPriceSortClicked, didAlphaSortClicked])
     console.log(displayBooks);
     //A visual side effects on bottom-part of side navigation 
@@ -331,13 +330,12 @@ const Books = ({ cartList, setCartList }) => {
                 className="book-display"
             >
                 <div className="book-display-upper">
-                    <div>
+                    <div className="book-display-main">
                         <h3 onClick={handleBookDetail} className="book-title">{b.title}</h3>
                         <h5 className="book-author">{`by | ${b.author}`}</h5>
                     </div>
-                    <div>
-                        <p>{`$${b.price}`}</p>
-                        <img src={`${b.default}`} width="200px" alt="book"></img>
+                    <div className="book-display-img-wrapper">
+                        <img className="book-display-img" src={`${b.default}`} alt="book"></img>
                     </div>
                 </div>
                 <div className="book-display-lower">
@@ -346,6 +344,9 @@ const Books = ({ cartList, setCartList }) => {
                         <i className="fas fa-shopping-cart"></i>
                         <span className="add-to-cart-text">|{' Add to cart'}</span>
                     </button>
+                </div>
+                <div className="book-display-price-container">
+                    <p>{`$${b.price}`}</p>
                 </div>
             </div>
         )

@@ -1,4 +1,5 @@
 import './App.scss';
+import './media-query.scss';
 
 import Nav from './Components/Nav';
 function App() {

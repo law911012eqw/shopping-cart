@@ -1,34 +1,45 @@
 /*********GLOBAL TAGS*********/
-li{
-  list-style: none;
-} 
-button{
-  cursor: pointer;
+li{ list-style: none; } 
+button{ cursor: pointer; }
+
+/*** Reusable functions ***/
+@mixin flexbox-col{
+  display: flex;
+  flex-direction: column;
+}
+@mixin flexbox-row{
+  display: flex;
+  flex-direction: row;
+}
+@mixin flexbox-col-between{
+  @include flexbox-col();
+  justify-content: space-between;
+}
+@mixin flexbox-col-start{
+  @include flexbox-col();
+  justify-content: flex-start;
+}
+@mixin flexbox-row-end{
+  @include flexbox-row();
+  justify-content: flex-end;
 }
 /*********NAVIGATION-MENU*********/
-.rineria{
-  width:50%;
-}
+.rineria{ width:300px; }
 .Nav{
   background: white;
   display: flex;
-  /* background-image: url(./assets/images/home/home_wall.jpg); */
-  justify-content: space-between;
+  justify-content: space-between; 
   align-items: center;
-  border-bottom: 3px double rgb(1,1,1);
-  box-shadow: 0 2px 15px 0 rgba(1,1,1,0.1);
+  box-shadow: 0 2px 22px 1px rgba(63, 48, 48, 0.15);
 }
 .logo{
-  display: flex;
-  flex-direction: column;
+  @include flexbox-col();
   font-family: Ubuntu, sans-serif;
   font-size: 22px;
   color: rgb(190, 90, 90);
 }
 .logo > span {
-  font-size: clamp(0.6vw, 1.1vw, 2rem); 
-  margin-left: 20px;
-  margin-top: -23px;
+  font-size: clamp(0.55rem, 1vw, 2rem); 
   border-right: rgb(190, 90, 90);
 }
 .Nav > ul{
@@ -39,9 +50,9 @@ button{
 }
 .Nav li{
   font-family: Ubuntu, sans-serif;
-  font-size: 1.5em;
+  font-size: clamp(0.7rem, 1vw, 2rem); 
   margin-top: 25px;
-  padding: 25px 25px 15px;
+  padding: 20px 20px 15px;
 }
 .Nav li:hover{
   background: rgba(0,0,0,0.1);
@@ -52,20 +63,23 @@ li > *{
 }
 .component-title{
   color:rgb(70, 16, 16);
+  font-size: clamp(0.8rem, 1vw, 2rem);
   text-align: center;
   margin-top: 22px;
   margin-bottom: 25px;
 }
 .home-card-container{
   display: flex;
+  flex-wrap: wrap;
   margin: 0 auto;
   margin-bottom: 50px;
+  min-width: 350px;
   max-width: 1200px;
   min-height: 500px;
   border: 1px solid rgba(1,1,1,0.6);
+  font-size: clamp(0.6rem, 0.6vw, 2rem);
 }
 .homecard{
-  flex-basis: 25%;
   color:rgb(87, 67, 67);
   transition: 3s ease-in-out;
 }
@@ -85,7 +99,7 @@ li > *{
   cursor: pointer;
 }
 .home-big-text{
-  font-size: 2.5em;
+  font-size: 2.2em;
   width: 100px;
   transform: translate(0, 30vh); 
   margin: auto;
@@ -118,58 +132,64 @@ li > *{
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin: 34px 18px 34px 28px;
 }
 .book-display-container{
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  margin: 15px 20px;
-  width: 85%;
+  justify-content: center;
+  margin: 10px 1px 10px 15px;
+  width: 100%;
   .book-display{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin: inherit;
+    @include flexbox-col-between();
     text-align: center;
-    border: 1px solid rgba(1,1,1,0.4);
-    padding: 25px;
-    height: auto;
+    border: 2px solid rgba(236, 74, 74, 0.4);
+    font-size: 12px;
     .book-display-upper{
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      font-size: clamp(0.7rem, 1vw, 2rem);
+      .book-display-main{
+        justify-content: flex-start;
+      }
+      div{
+        align-items: center;
+      }
     }
     .book-display-lower{
       .book-click-text{
-        font-size: 12px;
+        font-size: clamp(0.6rem, 0.8vw, 2rem);
       }
+    }
+    .book-display-price-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgb(243, 210, 210);   
+      background-color: rgb(253, 89, 89); 
+      color:rgb(252, 237, 237);
+      font-weight: 600;
+      font-size: clamp(0.7rem, 0.8vw, 2rem);
     }
   }
 }
 .book-title{
   color: rgb(223, 107, 107);
-  width: 200px;
   cursor: pointer;
+  text-align: center;
 }
 .book-title:hover{ text-decoration: underline; }
-.book-author{
-  text-align: center;
-  font-weight: 200;
-}
+.book-author{ font-weight: 200; }
 /*********Side Navigation BOOKS*********/
 .Books-Nav{
-  display: flex;
   padding: 24px 10px 40px 24px;
-  flex-direction: column;
-  font-size: clamp(1vw, 1.2vw, 2rem);
+  font-size: clamp(0.6rem, 1vw, 2rem);
   background-color:rgb(48, 39, 39);
   color: white;
   border-radius: 12px;
-  width: 15%;
+  width: 12vw;
+  z-index: 5;
   ul{
     margin: 0 auto;
-    margin-left: -12px;
     border-radius: 12px;
   }
   i{
@@ -181,39 +201,27 @@ li > *{
     padding-bottom: 12px;
     border-bottom:1px solid rgba(48, 39, 39, 0.1);
   }
-  li:hover{
-    text-decoration: underline;
-  }
-  *{
-    user-select: none;
-  }
-  li:target{
-    font-weight: bold;
-  }
+  li:hover{ text-decoration: underline; }
+  *{ user-select: none; }
+  li:target{ font-weight: bold; }
 }
 .prop-list{
-  ul{
-    margin-left: -40px;
-  }
-  li{
-    font-size: clamp(0.6vw, 0.8vw, 2rem);
-  }
-  li:hover{
-    color:rgb(228, 127, 127);
-  }
+  ul{ margin-left: -40px; }
+  li{ font-size: clamp(0.6rem, 0.8vw, 2rem);}
+  li:hover{ color:rgb(228, 127, 127); }
 }
-.fa-search-plus{
-  transform: scale(0.6);
-}
+.fa-search-plus{ transform: scale(0.6); }
 .add-to-cart{
   background-color:rgb(73, 200, 51); 
   border: none;
   i { color: white;}
-  span { color: white;}
+  span { 
+    color: white;
+    font-size: clamp(0.6rem, 0.8vw, 2rem);
+  }
 }
-.add-to-cart:hover{
-  transform: scale(1.2);
-}
+.add-to-cart:hover{ transform: scale(1.2); }
+
 /*********BOOK-DETAIL SECTION*********/
 .modal{
   height: 100vh;
@@ -230,11 +238,10 @@ li > *{
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  z-index: 8;
-  width: 50vw;
-  height: 60vh;
+  z-index: 10;
   background: #c8dcde;
   border: 1px solid rgba(1,1,1,0.2);
+  overflow-x: auto;
   .book-detail-info{
     display: flex;
     text-align: center;
@@ -246,24 +253,26 @@ li > *{
     background: rgba(255, 255, 255, 0.295);
     padding: 10px 15px;
     margin: 10px 30px;
-    .book-title{
-      font-size: clamp(1vw, 1.2vw, 2rem);
+    .book-detail-upper{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .book-title, .book-author{
+      font-size: clamp(0.6rem, 1vw, 2rem);
     }
   }
 }
 
 .book-detail-desc{
-  padding: 30px 10px;
+  padding: 20px 10px;
   font-weight: 300;
   background: rgba(255, 255, 255, 0.295);
-  margin: 10px 30px;
-  width: 65%;
-  font-size: clamp(0.5vw, 0.8vw, 1.2vw);
+  margin: 10px 10px;
+  font-size: clamp(0.6rem, 0.9vw, 2rem);
+  overflow-y: auto;
 }
-.img-slider{
-  display: flex;
-  flex-direction: column;
-}
+.img-slider{ @include flexbox-col(); }
 .img-slider-main{
   display: flex;
   align-items: center;
@@ -276,16 +285,9 @@ li > *{
   button:hover{
     border: 1px solid rgb(34, 32, 32);
   }
-  img{
-    width: 150px;
-  }
 }
-.dots{
-  text-align: center;
-}
-.current{
-  background: #4949498a;
-}
+.dots{ text-align: center; }
+.current{ background: #4949498a; }
 .isc{
   height: 10px;
   width: 10px;
@@ -305,7 +307,7 @@ li > *{
   .book-detail-genre{
     margin: 2px 3px;
     padding: 2px 4px;
-    font-size: clamp(0.5em, 0.7em, 1.4em);
+    font-size: clamp(0.5rem, 0.8vw, 2rem);
     background:rgb(240, 94, 94);
     color: white;
   }
@@ -317,30 +319,25 @@ li > *{
 }
 .book-detail-price-tag{
   padding: 5px;
-  font-size: clamp(0.5em, 0.7em, 1.4em);
+  font-size: clamp(0.6rem, 0.8vw, 2rem);
   background: rgb(236, 174, 174);
 }
 .btn-close{
   position: absolute;
-  top: 100;
   right: .2%;
   width: 20px;
   height: 20px;
   border: none;
   cursor: pointer;
   color:rgb(158, 12, 12);
-  .fa-times-circle{
-    margin: 0 auto;
-  }
+  .fa-times-circle{ margin: 0 auto; }
 }
 .btn-close:hover{
   box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.2);
   transform: scale(1.04);
 }
 /*********SHOPPING-CART SECTION*********/
-.Cart{
-  margin: 24px 50px;
-}
+.Cart{ margin: 24px 50px; }
 .shopping-cart-wrapper{ width: 760px; }
 #cart-table-header{
   border-bottom: 2px solid rgba(24,24,24, 0.4);
@@ -366,12 +363,9 @@ li > *{
   padding: 5px 25px;
 }
 .cart-btn-wrapper{
-  display: flex;
-  flex-direction: row;
+  @include flexbox-row-end();
   justify-content: flex-end;
-  button{
-    margin: 25px;
-  }
+  button{ margin: 25px; }
 }
 .btn-payment{
   background: rgb(241, 126, 126);
