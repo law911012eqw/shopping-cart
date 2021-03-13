@@ -211,8 +211,7 @@ li > *{
   li:hover{ color:rgb(228, 127, 127); }
 }
 .fa-search-plus{ transform: scale(0.6); }
-.add-to-cart{
-  background-color:rgb(73, 200, 51); 
+@mixin cart-button{
   border: none;
   i { color: white;}
   span { 
@@ -220,7 +219,15 @@ li > *{
     font-size: clamp(0.6rem, 0.8vw, 2rem);
   }
 }
-.add-to-cart:hover{ transform: scale(1.2); }
+.add-to-cart{
+  background-color:rgb(73, 200, 51); 
+  @include cart-button;
+}
+.remove-from-cart{
+  background-color:rgb(200, 56, 51); 
+  @include cart-button;
+}
+.add-to-cart:hover, .remove-from-cart:hover{ transform: scale(1.2); }
 
 /*********BOOK-DETAIL SECTION*********/
 .modal{
@@ -337,12 +344,22 @@ li > *{
   transform: scale(1.04);
 }
 /*********SHOPPING-CART SECTION*********/
+.cart-num-notif{
+  position: absolute;
+  text-align: center;
+  font-size: 0.9em;
+  background: rgb(223, 107, 107);
+  color: white;
+  border-radius: 50%;
+}
 .Cart{ margin: 24px 50px; }
 .shopping-cart-wrapper{ width: 760px; }
 #cart-table-header{
   border-bottom: 2px solid rgba(24,24,24, 0.4);
 }
 .shopping-cart-list{
+  max-height: 457px;
+  overflow-y: auto;
   border: 1px solid rgba(1,1,1,0.2);
   width: inherit;
 }

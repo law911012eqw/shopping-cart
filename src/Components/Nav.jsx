@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
 
 import Home from './Home';
@@ -7,6 +7,11 @@ import Cart from './Cart';
 import logo from '../assets/images/shoppingcart-logo.png'
 const Nav = () => {
     const [cartList, setCartList] = useState([]);
+
+    //Reserved array of book objects for later
+    const [books, setBooks] = useState([]);
+    console.log('cart list: ' + cartList);
+    console.log('books: ' + {books});
     const quote = `Sell used books at reasonably low price`;
     return (
         <Router>
@@ -35,14 +40,21 @@ const Nav = () => {
                             >Books</NavLink>
                         </li>
                         <li>
-                        <NavLink
+                            <NavLink
                                 to="/shopping-cart/Cart"
                                 activeStyle={{
                                     fontWeight: "bold",
                                 }}
                             >Cart</NavLink>
+                            <div
+                                className="cart-num-notif"
+                                style={
+                                        cartList.length !== 0 ? { visibility: "visible" } : { visibility: "hidden" }
+                                    }>
+                                    { cartList.length !== 0 ? cartList.length : null } 
+                            </div>
                         </li>
-                    </ul>
+                    </ul>   
                 </nav>
 
                 <Switch>
@@ -50,10 +62,10 @@ const Nav = () => {
                         <Home />
                     </Route>
                     <Route exact path="/shopping-cart/Books">
-                        <Books cartList={cartList} setCartList={setCartList}/>
+                        <Books cartList={cartList} setCartList={setCartList} books={books} setBooks={setBooks} />
                     </Route>
                     <Route exact path="/shopping-cart/Cart">
-                        <Cart cartList={cartList} setCartList={setCartList}/>
+                        <Cart cartList={cartList} setCartList={setCartList} />
                     </Route>
                 </Switch>
             </div>

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
+import uniqid from "uniqid";
 const Cart = ({ cartList, setCartList }) => {
     //sub components
+    console.log(cartList);
     const [total, setTotal] = useState(0.00);
     const clearCartList = () => setCartList([]);
     const RenderEmptyText = () => {
@@ -26,7 +28,7 @@ const Cart = ({ cartList, setCartList }) => {
                         </div>
                         {cartList.map((item) => {
                             return (
-                                <div className="shopping-cart-item">
+                                <div key={uniqid()} className="shopping-cart-item">
                                     <span className="shopping-item-book">{item.title} by | {item.author}</span>
                                     <span className="shopping-item-cost">$ {item.price}</span>
                                 </div>
@@ -39,7 +41,7 @@ const Cart = ({ cartList, setCartList }) => {
                     <div className="cart-btn-wrapper">
                         <button onClick={() => clearCartList()} className="btn-cancel">Clear All</button>
                         <button className="btn-payment">
-                            <i class="fas fa-dollar-sign"></i>
+                            <i className="fas fa-dollar-sign"></i>
                             <span className="add-to-cart-text"> Pay books</span>
                         </button>
                     </div>

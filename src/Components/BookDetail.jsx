@@ -69,7 +69,7 @@ const BookDetail = ({ objForBookDetail, setObjForBookDetail, cartList, setCartLi
                         <div className="book-detail-cart-wrapper">
                             <div className="book-detail-price-tag">{`$ `}{obj.price}</div>
                             <button onClick={() => toggleAddedToCart()} className="add-to-cart">
-                                <i className="fas fa-shopping-cart"></i>
+                            <i className={obj.inCart === true ? "fas fa-cart-arrow-down" : "fas fa-cart-plus"}></i>
                                 <span className="add-to-cart-text">|Add to cart</span>
                             </button>
                         </div>
