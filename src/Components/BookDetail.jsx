@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-const BookDetail = ({ objForBookDetail, setObjForBookDetail, cartList, setCartList }) => {
+const BookDetail = ({ objForBookDetail, setObjForBookDetail, books, setBooks, setCurrentID, cartList, setCartList }) => {
     const obj = objForBookDetail; //renaming the object to shorter name
-    const [genreArr, setGenreArr] = useState([]);
+    const [genreArr, setGenreArr] = useState([]); //state for multiple genres in a book
     const [slideIndex, setSlideIndex] = useState(0); //images prop elements
-    const [currentImage, setCurrentImage] = useState()
-    const handleClick = () => setObjForBookDetail(null);
+    const [currentImage, setCurrentImage] = useState() //state for current image
+    const handleClick = () => setObjForBookDetail(null); //to track clicked event
     const imageArray = ['default', 'open', 'back'];
-
+    //To separate the genres in a string to an array to filtered as a multiple genre for a book
     useEffect(() => {
         function seperateByComma(str) {
             str = str.split('').map(x => x === '=' ? x = ' ' : x).join('');
@@ -29,8 +29,33 @@ const BookDetail = ({ objForBookDetail, setObjForBookDetail, cartList, setCartLi
         else if (modifiedIndex < 0) { setSlideIndex(imageArray.length - 1); }
         else { setSlideIndex(modifiedIndex); }
     }
-    const toggleAddedToCart = () => {
-        setCartList([...cartList, objForBookDetail]);
+    //toggles a specific boolean property inside the main database of books
+    const updateBookObjects = (bool) => {
+        let copyBooksArr = books;
+        copyBooksArr.map((o) => {
+            if (o.id === obj.id) {
+                o.inCart = bool;
+            }
+        })
+        setBooks(books);
+    }
+    const toggleAddedToCart = (b) => {
+        if (b.inCart === false) {
+            setCurrentID(b.id);
+            setCartList([...cartList, {
+                id: b.id,
+                title: b.title,
+                author: b.author,
+                price: b.price
+            }])
+            updateBookObjects(true);
+        } else {
+            setCurrentID(b.id);
+            const copyCartList = cartList;
+            copyCartList.filter(x => x.id !== b.id);
+            setCartList(copyCartList.filter(x => x.id !== b.id));
+            updateBookObjects(false);
+        }
     }
     useEffect(() => {
         let i;
@@ -68,9 +93,9 @@ const BookDetail = ({ objForBookDetail, setObjForBookDetail, cartList, setCartLi
                         </div>
                         <div className="book-detail-cart-wrapper">
                             <div className="book-detail-price-tag">{`$ `}{obj.price}</div>
-                            <button onClick={() => toggleAddedToCart()} className="add-to-cart">
-                            <i className={obj.inCart === true ? "fas fa-cart-arrow-down" : "fas fa-cart-plus"}></i>
-                                <span className="add-to-cart-text">|Add to cart</span>
+                            <button onClick={() => toggleAddedToCart(obj)} className={obj.inCart === true ? "remove-from-cart" : "add-to-cart"}>
+                                <i className={obj.inCart === true ? "fas fa-cart-arrow-down" : "fas fa-cart-plus"}></i>
+                                <span className="add-to-cart-text">|{obj.inCart === true ? "remove from cart" : "add to cart"}</span>
                             </button>
                         </div>
                     </div>

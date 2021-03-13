@@ -319,7 +319,7 @@ const Books = ({ cartList, setCartList, books, setBooks }) => {
         })
         setDisplayBooks(newArray);
     }, [matchValue])
-    
+
     //This triggers when the cart list from parent component went empty
     useEffect(() => {
         const booksArr = books;
@@ -330,10 +330,10 @@ const Books = ({ cartList, setCartList, books, setBooks }) => {
                 }
             })
             setBooks(booksArr);
-            console.log('reset cart prop of books')
         }
     }, [cartList, currentID])
     const renderBooks = (arr) => arr.map((b, i) => {
+        console.log(b);
         const handleBookDetail = () => setObjForBookDetail(b);
 
         //toggles a specific boolean property inside the main database of books
@@ -357,12 +357,9 @@ const Books = ({ cartList, setCartList, books, setBooks }) => {
                 }])
                 updateBookObjects(true);
             } else {
-                console.log('remove book from cart');
-                console.log(b.id);
                 setCurrentID(b.id);
                 const copyCartList = cartList;
                 copyCartList.filter(x => x.id !== b.id);
-                console.log(copyCartList.filter(x => x.id !== b.id));
                 setCartList(copyCartList.filter(x => x.id !== b.id));
                 updateBookObjects(false);
             }
@@ -415,6 +412,9 @@ const Books = ({ cartList, setCartList, books, setBooks }) => {
                 ? <BookDetail
                     objForBookDetail={objForBookDetail}
                     setObjForBookDetail={setObjForBookDetail}
+                    books={books}
+                    setBooks={setBooks}
+                    setCurrentID={setCurrentID}
                     cartList={cartList}
                     setCartList={setCartList}
                 /> : null}
