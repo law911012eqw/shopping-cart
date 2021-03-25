@@ -14,3 +14,4 @@ Technologies/Tools used:
 - [X] Use array methods away from comfort zone(Complexity & efficiency)
 - [X] Enhancement of adding books to the cart(Enhancement)
 - [X] Feat: a simple notification above cart link
+- [X] Modify logo background to be transparent
