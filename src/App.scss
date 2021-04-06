@@ -74,21 +74,22 @@ li > *{
   margin: 0 auto;
   margin-bottom: 50px;
   min-width: 350px;
-  max-width: 1200px;
+  max-width: 1550px;
   min-height: 500px;
+  max-height: 1000px;
   border: 1px solid rgba(1,1,1,0.6);
   font-size: clamp(0.6rem, 0.6vw, 2rem);
 }
 .homecard{
+  position: relative;
   color:rgb(87, 67, 67);
   transition: 3s ease-in-out;
 }
 .homecard:hover{
   .home-big-text{
-    transform: translate(0, 7vh);
+    transform: translate(0, -500%);
     opacity: 0.1;
     visibility: hidden;
-
   }
   .blur-bg{
     visibility: visible;
@@ -99,9 +100,11 @@ li > *{
   cursor: pointer;
 }
 .home-big-text{
-  font-size: 2.2em;
-  width: 100px;
-  transform: translate(0, 30vh); 
+  position: absolute;
+  top: 50%;
+  left: 38%;
+  font-size: clamp(1rem, 1.8vw, 2rem);
+  // width: auto;
   margin: auto;
   text-align: center;
   pointer-events: none;
@@ -146,12 +149,8 @@ li > *{
     font-size: 12px;
     .book-display-upper{
       font-size: clamp(0.7rem, 1vw, 2rem);
-      .book-display-main{
-        justify-content: flex-start;
-      }
-      div{
-        align-items: center;
-      }
+      .book-display-main{ align-items: center; }
+      div{ align-items: center; }
     }
     .book-display-lower{
       .book-click-text{
@@ -353,9 +352,13 @@ li > *{
   border-radius: 50%;
 }
 .Cart{ margin: 24px 50px; }
+.Cart > h1{
+  font-size: clamp(1rem, 1.2vw, 2rem);
+}
 .shopping-cart-wrapper{ width: 760px; }
 #cart-table-header{
   border-bottom: 2px solid rgba(24,24,24, 0.4);
+  font-size: clamp(0.8rem, 1.2vw, 2rem);
 }
 .shopping-cart-list{
   max-height: 457px;
@@ -370,6 +373,7 @@ li > *{
 }
 .shopping-item-book, .shopping-item-cost{
   font-weight: 300;
+  font-size: clamp(0.8rem, 1.2vw, 2rem);
   padding-right: 22px;
 }
 .shopping-cart-item > span:nth-child(even){
